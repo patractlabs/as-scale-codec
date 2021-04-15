@@ -16,12 +16,12 @@ import { UnwrappableCodec } from "./interfaces/UnwrappableCodec";
 import { Bytes } from "./utils/Bytes";
 
 /** Representation for a Int value in the system. */
-export abstract class AbstractInt<T extends number> implements UnwrappableCodec<T> {
-
+export abstract class AbstractInt<T extends number>
+    implements UnwrappableCodec<T> {
     protected bitLength: i32;
     private _value: T;
 
-    constructor (value: T, bitLength: i32) {
+    constructor(value: T, bitLength: i32) {
         this._value = value;
         this.bitLength = bitLength;
     }
@@ -29,21 +29,25 @@ export abstract class AbstractInt<T extends number> implements UnwrappableCodec<
     /**
      * @description Returns the inner native value
      */
-    public unwrap(): T{
+    @inline
+    public unwrap(): T {
         return this._value;
     }
 
     /** Encodes the value as u8[] as per the SCALE codec specification */
-    public toU8a (): u8[] {
+    public toU8a(): u8[] {
         let bytesEncoded = new Array<u8>(this.bitLength);
         Bytes.putUint<T>(bytesEncoded, this.unwrap(), this.bitLength);
         return bytesEncoded;
     }
 
-    public eq(other: AbstractInt<T>): bool{
+    @inline
+    public eq(other: AbstractInt<T>): bool {
         return this.unwrap() == other.unwrap();
     }
-    public notEq(other: AbstractInt<T>): bool{
+
+    @inline
+    public notEq(other: AbstractInt<T>): bool {
         return this.unwrap() != other.unwrap();
     }
 
@@ -52,21 +56,24 @@ export abstract class AbstractInt<T extends number> implements UnwrappableCodec<
      * @param bytes SCALE encoded bytes
      * @param index index to start decoding the bytes from
      */
-    public populateFromBytes(bytes: u8[], index: i32 = 0): void {
+    public populateFromBytes(bytes: u8[]): i32 {
         assert(bytes.length - index > 0, "AbstractInt: Invalid bytes provided");
         this._value = Bytes.toUint<T>(bytes, this.bitLength, index);
+        return this.encodedLength();
     }
 
     /**
      * @description Returns the string representation of the value
      */
-    toString (): string {
+    @inline
+    toString(): string {
         return this.unwrap().toString();
     }
     /**
      * @description The length of Uint8Array when the value is encoded
      */
-    public encodedLength (): i32 {
+    @inline
+    public encodedLength(): i32 {
         return this.bitLength;
     }
 }

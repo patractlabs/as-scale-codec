@@ -78,19 +78,17 @@ export class Bytes {
 
 
     // Decode compact int from u8[] input
-    static decodeCompactInt (input: u8[], index: i32 = 0): DecodedData<u64> {
-        assert(input.length - index != 0, "Invalid input: Byte array should not be empty");
-
-        const mode = input[index] & 3;
+    static decodeCompactInt (input: u8[]): DecodedData<u64> {
+        const mode = input[0] & 3;
         if (i32(mode) <= BIT_LENGTH.INT_16) {
-            return Bytes.decodeSmallInt(input, mode, index);
+            return Bytes.decodeSmallInt(input, mode, 0);
         }
 
-        const topSixBits = input[index] >> 2;
+        const topSixBits = input[0] >> 2;
         const byteLen = u8(topSixBits) + 4;
 
         const buf = new Array<u8>(byteLen);
-        Bytes.copy<u8>(input, buf, 0, index);
+        Bytes.copy<u8>(input, buf, 0, 0);
 
         if (i32(byteLen) == BIT_LENGTH.INT_32) {
             return new DecodedData<u64>(u64(Bytes.toUint<u32>(buf, BIT_LENGTH.INT_32)), BIT_LENGTH.INT_32);

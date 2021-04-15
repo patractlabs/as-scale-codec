@@ -16,15 +16,14 @@ import { UnwrappableCodec } from "../interfaces/UnwrappableCodec";
 import { BIT_LENGTH, Bytes } from "../utils/Bytes";
 import { BytesBuffer } from "../utils/BytesBuffer";
 
-/** 
- * @description Representation for a CompactInt value in the system. 
-*/
+/**
+ * @description Representation for a CompactInt value in the system.
+ */
 export class CompactInt implements UnwrappableCodec<i64> {
-
     private _value: i64;
     protected bitLength: i32;
 
-    constructor (value: i64 = 0) {
+    constructor(value: i64 = 0) {
         this._value = value;
         this.bitLength = CompactInt._computeBitLength(value);
     }
@@ -32,14 +31,15 @@ export class CompactInt implements UnwrappableCodec<i64> {
     /**
      * @description Return inner native value
      */
-    unwrap(): i64{
+    @inline
+    unwrap(): i64 {
         return this._value;
     }
 
     /**
-    * @description  Encodes the value as u8[] as per the SCALE codec specification
-    */
-    public toU8a (): u8[] {
+     * @description  Encodes the value as u8[] as per the SCALE codec specification
+     */
+    public toU8a(): u8[] {
         const bytesBuffer = new BytesBuffer();
         bytesBuffer.encodeCompactInt(this._value);
 
@@ -50,22 +50,22 @@ export class CompactInt implements UnwrappableCodec<i64> {
      * @param bytes SCALE encoded bytes
      * @param index index to start decoding the bytes from
      */
-    public populateFromBytes(bytes: u8[], index: i32 = 0): void{
-        assert(bytes.length - index > 0, "CompactInt: Empty bytes array provided");
-        const decodedData = Bytes.decodeCompactInt(bytes, index);
+    public populateFromBytes(bytes: u8[]): i32 {
+        const decodedData = Bytes.decodeCompactInt(bytes);
         this._value = decodedData.value;
         this.bitLength = CompactInt._computeBitLength(decodedData.value);
     }
     /**
-    * @description Returns the string representation of the value
-    */
-    toString (): string {
+     * @description Returns the string representation of the value
+     */
+    @inline
+    toString(): string {
         return this._value.toString();
     }
 
     /**
      * Internal private function to compute bit length of the value
-     * @param value 
+     * @param value
      */
     static _computeBitLength(value: u64): i32 {
         if (value < 1 << 6) return BIT_LENGTH.INT_8;
@@ -78,37 +78,44 @@ export class CompactInt implements UnwrappableCodec<i64> {
     /**
      * @description The length of Int when the value is encoded
      */
-    public encodedLength (): i32 {
+    @inline
+    public encodedLength(): i32 {
         return this.bitLength;
     }
 
-
+    @inline
     eq(other: CompactInt): bool {
         return this._value == other.unwrap();
     }
 
+    @inline
     notEq(other: CompactInt): bool {
         return this._value != other.unwrap();
     }
 
     /**
      * @description Instantiates Compact Int from u8[] SCALE encoded bytes
-     * Compact Int decodes int8, int16, int32, int64 size correctly  
+     * Compact Int decodes int8, int16, int32, int64 size correctly
      * @param input SCALE encoded bytes
      * @param index an index of input to start decoding from
      */
-    static fromU8a (value: u8[], index: i32 = 0): CompactInt {
-        assert(value.length - index > 0, "CompactInt: Empty bytes array provided");
+    static fromU8a(value: u8[], index: i32 = 0): CompactInt {
+        assert(
+            value.length - index > 0,
+            "CompactInt: Empty bytes array provided"
+        );
         const decodedData = Bytes.decodeCompactInt(value, index);
         return new CompactInt(decodedData.value);
     }
 
-    @inline @operator('==')
+    @inline
+    @operator("==")
     static eq(a: CompactInt, b: CompactInt): bool {
         return a.eq(b);
     }
 
-    @inline @operator('!=')
+    @inline
+    @operator("!=")
     static notEq(a: CompactInt, b: CompactInt): bool {
         return a.notEq(b);
     }

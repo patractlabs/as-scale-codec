@@ -12,11 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { UnwrappableCodec } from './interfaces/UnwrappableCodec';
-import { Bytes } from './utils/Bytes';
+import { UnwrappableCodec } from "./interfaces/UnwrappableCodec";
+import { Bytes } from "./utils/Bytes";
 
 export class Hash implements UnwrappableCodec<Array<u8>> {
-
     private _values: Array<u8>;
 
     constructor(value: u8[] = []) {
@@ -27,42 +26,47 @@ export class Hash implements UnwrappableCodec<Array<u8>> {
     /**
      * @description Returns the inner native value
      */
-    public unwrap(): Array<u8>{
+    @inline
+    public unwrap(): Array<u8> {
         return this._values;
     }
-    
+
     /**
-    * @description  Encodes Hash as u8[] as per the SCALE codec specification
-    */
-    public toU8a (): u8[] {
+     * @description  Encodes Hash as u8[] as per the SCALE codec specification
+     */
+    @inline
+    public toU8a(): u8[] {
         const result: u8[] = new Array<u8>(this.encodedLength());
         Bytes.copy<u8>(this._values, result);
 
         return result;
     }
-    
+
     /**
      * @description Non-static constructor method used to populate defined properties of the model.
      * @param bytes SCALE encoded bytes
      * @param index index to start decoding the bytes from
      */
-    public populateFromBytes(bytes: u8[], index: i32 = 0): void{
+    @inline
+    public populateFromBytes(bytes: u8[]): i32 {
         assert(bytes.length - index >= 0, "Hash: Empty bytes array provided");
         this._values = new Array<u8>(32);
         Bytes.copy(bytes, this._values, 0, index);
+        return this.encodedLength();
     }
 
     /**
-    * @description  Return string representation of Hash
-    */
-    public toString (): string {
-        return "0x" + this._values.join('');
+     * @description  Return string representation of Hash
+     */
+    @inline
+    public toString(): string {
+        return "0x" + this._values.join("");
     }
 
     /**
-    * @description  Instantiate Hash from bytes cropped from the left.
-    */
-    static bytesToHash (bytes: u8[]): Hash {
+     * @description  Instantiate Hash from bytes cropped from the left.
+     */
+    static bytesToHash(bytes: u8[]): Hash {
         let hash = new Hash([]);
         if (bytes.length > 32) {
             bytes = bytes.slice(bytes.length - 32);
@@ -74,9 +78,10 @@ export class Hash implements UnwrappableCodec<Array<u8>> {
     }
 
     /**
-    * @description The length of encoded Hash
-    */
-    public encodedLength (): i32 {
+     * @description The length of encoded Hash
+     */
+    @inline
+    public encodedLength(): i32 {
         return 32;
     }
 
@@ -85,32 +90,33 @@ export class Hash implements UnwrappableCodec<Array<u8>> {
      * @param input SCALE encoded bytes
      * @param index an index of input to start decoding from
      */
-    static fromU8a (input: u8[], index: i32 = 0): Hash {
+    static fromU8a(input: u8[], index: i32 = 0): Hash {
         assert(input.length - index >= 0, "Hash: Empty bytes array provided");
         return new Hash(input.slice(index));
     }
 
     eq(other: Hash): bool {
-        let areEqual = true;
         for (let i = 0; i < this.unwrap().length; i++) {
             if (this.unwrap()[i] != other.unwrap()[i]) {
-                areEqual = false;
-                break;
+                return false;
             }
         }
-        return areEqual;
+        return true;
     }
 
+    @inline
     notEq(other: Hash): bool {
         return !this.eq(other);
     }
 
-    @inline @operator('==')
+    @inline
+    @operator("==")
     static eq(a: Hash, b: Hash): bool {
         return a.eq(b);
     }
 
-    @inline @operator('!=')
+    @inline
+    @operator("!=")
     static notEq(a: Hash, b: Hash): bool {
         return a.notEq(b);
     }

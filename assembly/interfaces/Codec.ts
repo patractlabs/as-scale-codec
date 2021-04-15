@@ -32,9 +32,9 @@ export interface Codec {
     /**
      * @description Non-static constructor method used to populate defined properties of the model
      * @param bytes SCALE encoded bytes
-     * @param index index to start decoding the bytes from
+     * @returns consumed bytes number
      */
-    populateFromBytes(bytes: u8[], index: i32): void;
+    populateFromBytes(bytes: u8[]): i32;
 
     /**
      * Checks if an instance is equal with other instance
