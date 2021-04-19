@@ -18,7 +18,7 @@ import { UnwrappableCodec } from "./interfaces/UnwrappableCodec";
 export class Bool implements UnwrappableCodec<bool> {
 
     private _value: bool;
-    
+
     constructor (value: bool = false) {
         this._value = value;
     }
@@ -46,7 +46,7 @@ export class Bool implements UnwrappableCodec<bool> {
      * @param index index to start decoding the bytes from
      */
     public populateFromBytes(bytes: u8[], index: i32 = 0): void{
-        assert(bytes.length > 0 && (bytes[index] == 1 || bytes[index] == 0), 'Bool: Cannot decode invalid input');
+        assert(bytes.length > 0 && (bytes[index] == 1 || bytes[index] == 0), "Bool: Cannot decode invalid input");
         this._value = bytes[index] == 1;
     }
 
@@ -56,7 +56,7 @@ export class Bool implements UnwrappableCodec<bool> {
     toString (): string {
         return this._value.toString();
     }
-    
+
     eq(other: Bool): bool {
         return this._value == other.unwrap();
     }
@@ -73,17 +73,17 @@ export class Bool implements UnwrappableCodec<bool> {
 
     /** Instantiates new Bool from u8[] SCALE encoded bytes */
     static fromU8a (value: u8[], index: i32 = 0): Bool {
-        assert(value.length - index > 0 && (value[index] == 1 || value[index] == 0), 'Bool: Cannot decode invalid input');
+        assert(value.length - index > 0 && (value[index] == 1 || value[index] == 0), "Bool: Cannot decode invalid input");
 
         return new Bool(value[index] == 1);
     }
 
-    @inline @operator('==')
+    @inline @operator("==")
     static eq(a: Bool, b: Bool): bool {
         return a.eq(b);
     }
 
-    @inline @operator('!=')
+    @inline @operator("!=")
     static notEq(a: Bool, b: Bool): bool {
         return a.notEq(b);
     }

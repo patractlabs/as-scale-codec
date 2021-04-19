@@ -53,7 +53,7 @@ describe("Int8", () => {
         expect<Int8>(Int8.fromU8a([0x01])).toStrictEqual(new Int8(1));
         expect<Int8>(Int8.fromU8a([0xf])).toStrictEqual(new Int8(15));
         expect<Int8>(Int8.fromU8a([0x10])).toStrictEqual(new Int8(16));
-        expect<Int8>(Int8.fromU8a([0xf1])).toStrictEqual(new Int8(-15))
+        expect<Int8>(Int8.fromU8a([0xf1])).toStrictEqual(new Int8(-15));
     });
     it("should decode using populate method", () => {
         const int8 = new Int8();
@@ -72,10 +72,10 @@ describe("Int8", () => {
         expect<Int8>(Int8.fromU8a([0, 0, 1, 0xf1, 12], 3)).toStrictEqual(new Int8(-15));
     });
 
-    itThrows('should throw when empty array is provided', () => {
+    itThrows("should throw when empty array is provided", () => {
         let v1 = Int8.fromU8a([]);
     });
-    itThrows('should throw when index is out of range', () => {
+    itThrows("should throw when index is out of range", () => {
         let v1 = Int8.fromU8a([1, 0, 1], 3);
     });
 });
@@ -150,15 +150,15 @@ describe("Int16", () => {
         expect<Int16>(int16).toStrictEqual(new Int16(-16383));
     });
 
-    it('should decode only two bytes', () => {
+    it("should decode only two bytes", () => {
         expect<Int16>(Int16.fromU8a([0x01, 0x81, 0xff, 0x01], 1)).toStrictEqual(new Int16(-127));
         expect<Int16>(Int16.fromU8a([0, 0, 0, 0, 0xff, 0x00, 0, 0, 0, 0], 4)).toStrictEqual(new Int16(255));
     });
 
-    itThrows('should throw when empty array is provided', () => {
+    itThrows("should throw when empty array is provided", () => {
         let v1 = Int16.fromU8a([]);
-    });    
-    itThrows('should throw when index is out of range', () => {
+    });
+    itThrows("should throw when index is out of range", () => {
         let v1 = Int16.fromU8a([1, 0, 1, 12, 123, 1], 6);
     });
 });
@@ -207,17 +207,17 @@ describe("Int32", () => {
         expect<Int32>(int32).toStrictEqual(new Int32(-16383));
         int32.populateFromBytes([0x01, 0x00, 0x00, 0xc0]);
         expect<Int32>(int32).toStrictEqual(new Int32(-1073741823));
-    })
+    });
 
-    it('should decode only four bytes', () => {
+    it("should decode only four bytes", () => {
         expect<Int32>(Int32.fromU8a([0x01, 0x01, 0x00, 0x00, 0xc0], 1)).toStrictEqual(new Int32(-1073741823));
         expect<Int32>(Int32.fromU8a([0x01, 0x00, 0x00, 0xff, 0x00, 0x00, 0x00], 3)).toStrictEqual(new Int32(255));
-     });
+    });
 
-    itThrows('should throw when empty array is provided', () => {
+    itThrows("should throw when empty array is provided", () => {
         let v1 = Int32.fromU8a([]);
     });
-    itThrows('should throw when index is out of range', () => {
+    itThrows("should throw when index is out of range", () => {
         let v1 = Int32.fromU8a([0, 0, 1, 1, 0, 1, 12, 123, 12], 9);
     });
 });
@@ -268,24 +268,24 @@ describe("Int64", () => {
 
     it("should decode int64 with populate method", () => {
         const int64 = new Int64();
-        int64.populateFromBytes([0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x7f])
+        int64.populateFromBytes([0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x7f]);
         expect<Int64>(int64).toStrictEqual(new Int64(9223372036854775807));
         int64.populateFromBytes([0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff]);
         expect<Int64>(int64).toStrictEqual(new Int64(-1));
         int64.populateFromBytes([0x01, 0xc0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff]);
         expect<Int64>(int64).toStrictEqual(new Int64(-16383));
-    })
+    });
 
-    it('should decode only eight bytes', () => {
+    it("should decode only eight bytes", () => {
         expect<Int64>(Int64.fromU8a([0x01, 0x01, 0xff, 0x3f, 0, 0, 0, 0, 0, 0], 2)).toStrictEqual(new Int64(16383));
         expect<Int64>(Int64.fromU8a([0x01, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0, 0, 0, 0], 3)).toStrictEqual(new Int64(1));
-     });
+    });
 
-    itThrows('should throw when empty array is provided', () => {
+    itThrows("should throw when empty array is provided", () => {
         let v1 = Int64.fromU8a([]);
     });
-    
-    itThrows('should throw when index is out of range', () => {
+
+    itThrows("should throw when index is out of range", () => {
         let v1 = Int64.fromU8a([1, 0, 1, 3], 4);
     });
 

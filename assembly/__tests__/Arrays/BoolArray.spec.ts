@@ -22,7 +22,7 @@ describe("Bool Array", () => {
         const boolArray = new BoolArray();
         boolArray.populateFromBytes([0x0c, 0x00, 0x01, 0x01]);
         expect<BoolArray>(boolArray).toStrictEqual(new BoolArray([false, true, true]));
-    })
+    });
     itThrows("should throw because of invalid bytes", () => {
         const boolTest: u8[] = [0x0c, 0x00, 0x01, 0xff];
         BoolArray.fromU8a(boolTest);

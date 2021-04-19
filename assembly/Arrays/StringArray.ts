@@ -32,9 +32,9 @@ export class StringArray extends AbstractArray<ScaleString, string>{
         return new DecodedData<string>(
             ScaleString.fromU8a(value.slice(0, encodedStringLength)).toString(),
             encodedStringLength
-        )
+        );
     }
-    
+
     /**
      * @description Returns encoded byte length of the type
      */
@@ -69,12 +69,12 @@ export class StringArray extends AbstractArray<ScaleString, string>{
         return AbstractArray.fromU8a<StringArray>(input);
     }
 
-    @inline @operator('==')
+    @inline @operator("==")
     static eq(a: StringArray, b: StringArray): bool {
         return a.eq(b);
     }
 
-    @inline @operator('!=')
+    @inline @operator("!=")
     static notEq(a: StringArray, b: StringArray): bool {
         return a.notEq(b);
     }

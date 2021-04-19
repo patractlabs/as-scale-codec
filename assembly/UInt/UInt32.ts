@@ -19,26 +19,26 @@ import { BIT_LENGTH, Bytes } from "../utils/Bytes";
 export class UInt32 extends AbstractInt<i32> {
 
     constructor (value: u32 = 0) {
-        super(value, BIT_LENGTH.INT_32)
+        super(value, BIT_LENGTH.INT_32);
     }
 
     /**
-     * @description Instantiates new UInt32 from u8[] SCALE encoded bytes  
-     * NOTE: if the length of the provided value is less than the byte length of the UInt32, 
+     * @description Instantiates new UInt32 from u8[] SCALE encoded bytes
+     * NOTE: if the length of the provided value is less than the byte length of the UInt32,
      * it is filled with 0 bytes
      */
     static fromU8a (value: u8[], index: i32 = 0): UInt32 {
-        assert(value.length - index > 0, 'UInt32: Invalid bytes provided');
+        assert(value.length - index > 0, "UInt32: Invalid bytes provided");
         var res = Bytes.toUint<u32>(value, BIT_LENGTH.INT_32, index);
         return new UInt32(res);
     }
 
-    @inline @operator('==')
+    @inline @operator("==")
     static eq(a: UInt32, b: UInt32): bool {
         return a.eq(b);
     }
 
-    @inline @operator('!=')
+    @inline @operator("!=")
     static notEq(a: UInt32, b: UInt32): bool {
         return a.notEq(b);
     }

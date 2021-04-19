@@ -11,11 +11,11 @@ export class ScaleMap<K extends Codec, V extends Codec> implements UnwrappableCo
      * Map value of ScaleMap
      */
     public readonly data: Map<K, V>;
-    
+
     constructor(data: Map<K, V> = new Map()){
         this.data = data;
     }
-    
+
     /**
      * @description return underlying native type
      */
@@ -24,29 +24,29 @@ export class ScaleMap<K extends Codec, V extends Codec> implements UnwrappableCo
     }
     /**
      * Check if ScaleMap has given key
-     * @param key 
+     * @param key
      */
     has(key: K): bool{
         return this.data.has(key);
     }
     /**
      * Get the value of given key
-     * @param key 
+     * @param key
      */
     get(key: K): V{
         return this.data.get(key);
     }
     /**
      * Set this value to the given key
-     * @param key 
-     * @param value 
+     * @param key
+     * @param value
      */
     set(key: K, value: V): void{
         this.data.set(key, value);
     }
     /**
      * Delete the given key with its value from the ScaleMap
-     * @param key 
+     * @param key
      */
     delete(key: K): void{
         this.data.delete(key);
@@ -71,7 +71,7 @@ export class ScaleMap<K extends Codec, V extends Codec> implements UnwrappableCo
     }
     /**
      * Convert ScaleMap to u8[]
-     * Length is encoded first, followed by all key and value encodings concatenated 
+     * Length is encoded first, followed by all key and value encodings concatenated
      */
     toU8a(): u8[]{
         let result: u8[] = [];
@@ -80,16 +80,16 @@ export class ScaleMap<K extends Codec, V extends Codec> implements UnwrappableCo
         result = result.concat(lenData.toU8a());
         for(let i = 0; i < keys.length; i++){
             result = result
-            .concat(keys[i].toU8a())
-            .concat(this.data.get(keys[i]).toU8a());
+                .concat(keys[i].toU8a())
+                .concat(this.data.get(keys[i]).toU8a());
         }
         return result;
     }
-    
+
     /**
      * @description Non-static constructor
-     * @param bytes 
-     * @param index 
+     * @param bytes
+     * @param index
      */
     populateFromBytes(bytes: u8[], index: i32 = 0): void {
         const bytesReader = new BytesReader(bytes.slice(index));
@@ -113,7 +113,7 @@ export class ScaleMap<K extends Codec, V extends Codec> implements UnwrappableCo
         if(aKeys.length != bKeys.length){
             return false;
         }
-        for (let i=0; i<aKeys.length; i++){
+        for (let i = 0; i < aKeys.length; i++){
             if(aKeys[i] != bKeys[i]){
                 areEqual = false;
                 break;
@@ -136,7 +136,7 @@ export class ScaleMap<K extends Codec, V extends Codec> implements UnwrappableCo
         const bytesReader = new BytesReader(input);
         const lenComp = bytesReader.readInto<CompactInt>();
 
-        for(let i: i32 = 0; i<lenComp.unwrap(); i++){
+        for(let i: i32 = 0; i < lenComp.unwrap(); i++){
             const key = bytesReader.readInto<K>();
             const value = bytesReader.readInto<V>();
             data.set(key, value);

@@ -33,7 +33,7 @@ describe("ByteArray", () => {
         for (let i = 0; i < TEST_DATA_VAL.length; i++) {
             const byteArray = new ByteArray(TEST_DATA_VAL[i]);
             const encodedBytes = byteArray.toU8a();
-            
+
             expect<i32>(encodedBytes.length).toStrictEqual(ENCODED_BYTES[i]);
             expect<u8[]>(encodedBytes).toStrictEqual(TEST_DATA_OUT[i]);
         }
@@ -96,7 +96,7 @@ describe("ByteArray", () => {
             byteArray.populateFromBytes(TEST_DATA_VAL[i]);
             expect<ByteArray>(byteArray).toStrictEqual(new ByteArray(TEST_DATA_OUT[i]));
         }
-    })
+    });
 
     it("should return hex representation of byte array", () => {
         const byteArray = ByteArray.fromU8a([0x08, 0x01, 0x01]);
@@ -107,8 +107,8 @@ describe("ByteArray", () => {
         const byteTest: u8[] = [0x0c]; // Encoded length = 3, actual data length = 0
         ByteArray.fromU8a(byteTest);
     });
-    
-    itThrows('should throw when index is out of range', () => {
+
+    itThrows("should throw when index is out of range", () => {
         ByteArray.fromU8a([8, 0, 1, 12, 0, 1, 3], 8);
     });
 });

@@ -29,8 +29,8 @@ describe("Byte", () => {
         const instance = new Byte();
         instance.populateFromBytes([1]);
         expect<Byte>(instance).toStrictEqual(new Byte(1));
-    })
-    itThrows('when provided empty byte array', () => {
+    });
+    itThrows("when provided empty byte array", () => {
         Byte.fromU8a([]);
     });
 });

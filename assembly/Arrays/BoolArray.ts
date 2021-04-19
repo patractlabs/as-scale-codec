@@ -30,16 +30,16 @@ export class BoolArray extends AbstractArray<Bool, bool> {
         return new DecodedData<bool>(
             scaleBool.unwrap(),
             scaleBool.encodedLength()
-        )
+        );
     }
-    
+
     /**
      * @description Returns encoded byte length of the type
      */
     public encodedLength(): i32{
         return (new CompactInt(this.values.length).encodedLength()) + super.values.length;
     }
-    
+
     /**
      * @description Non-static constructor method used to populate defined properties of the model
      * @param bytes SCALE encoded bytes
@@ -61,12 +61,12 @@ export class BoolArray extends AbstractArray<Bool, bool> {
         return AbstractArray.fromU8a<BoolArray>(input);
     }
 
-    @inline @operator('==')
+    @inline @operator("==")
     static eq(a: BoolArray, b: BoolArray): bool {
         return a.eq(b);
     }
 
-    @inline @operator('!=')
+    @inline @operator("!=")
     static notEq(a: BoolArray, b: BoolArray): bool {
         return a.notEq(b);
     }

@@ -31,7 +31,7 @@ export class UInt128Array extends AbstractArray<UInt128, u128> {
         return new DecodedData<u128>(
             u128Instance.unwrap(),
             u128Instance.encodedLength()
-        )
+        );
     }
 
     /**
@@ -62,12 +62,12 @@ export class UInt128Array extends AbstractArray<UInt128, u128> {
         return (new CompactInt(this.values.length).encodedLength()) + super.values.length * BIT_LENGTH.INT_128;
     }
 
-    @inline @operator('==')
+    @inline @operator("==")
     static eq(a: UInt128Array, b: UInt128Array): bool {
         return a.eq(b);
     }
 
-    @inline @operator('!=')
+    @inline @operator("!=")
     static notEq(a: UInt128Array, b: UInt128Array): bool {
         return a.notEq(b);
     }

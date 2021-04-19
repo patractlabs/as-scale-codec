@@ -31,7 +31,7 @@ export class Byte implements UnwrappableCodec<u8>{
     public unwrap(): u8{
         return this._value;
     }
-    
+
     /**
     * @description Encodes Byte as u8[] as per the SCALE codec specification
     */
@@ -44,7 +44,7 @@ export class Byte implements UnwrappableCodec<u8>{
      * @param index index to start decoding the bytes from
      */
     public populateFromBytes(bytes: u8[], index: i32 = 0): void{
-        assert(bytes.length - index > 0, 'Bool: Cannot decode invalid input');
+        assert(bytes.length - index > 0, "Bool: Cannot decode invalid input");
         this._value = bytes[index];
     }
 
@@ -55,7 +55,7 @@ export class Byte implements UnwrappableCodec<u8>{
     notEq(other: Byte): bool {
         return this._value != other.unwrap();
     }
-    
+
     /**
     * @description The length of Byte when the value is encoded
     */
@@ -65,16 +65,16 @@ export class Byte implements UnwrappableCodec<u8>{
 
     /** Instantiates new Byte from u8[] SCALE encoded bytes */
     static fromU8a (value: u8[], index: i32 = 0): Byte {
-        assert(value.length - index > 0, 'Byte: cannot decode invalid type');
+        assert(value.length - index > 0, "Byte: cannot decode invalid type");
         return new Byte(value[index]);
     }
 
-    @inline @operator('==')
+    @inline @operator("==")
     static eq(a: Byte, b: Byte): bool {
         return a.eq(b);
     }
 
-    @inline @operator('!=')
+    @inline @operator("!=")
     static notEq(a: Byte, b: Byte): bool {
         return a.notEq(b);
     }

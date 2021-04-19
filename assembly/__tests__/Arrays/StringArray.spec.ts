@@ -12,10 +12,10 @@ describe("StringArray", () => {
 
     it("should encode long string array", () => {
         const str = "The 1963 Impala featured rectilinear styling with an engine-turned aluminum rear taillight panel surrounded by a chrome border on SS models.";
-        const strArray = new StringArray(["hello", "world", repeatString(str, 500), '™ ± Ã ¿ £ µ']);
+        const strArray = new StringArray(["hello", "world", repeatString(str, 500), "™ ± Ã ¿ £ µ"]);
 
         const longStr: Array<u8> = append([0xC2, 0x45, 0x04, 0x00], repeatString(str, 500));
-        const asciiStr: Array<u8> = append([0x48], '™ ± Ã ¿ £ µ');
+        const asciiStr: Array<u8> = append([0x48], "™ ± Ã ¿ £ µ");
 
         let expectedResult: Array<u8> = [0x10, 0x14, 0x68, 0x65, 0x6c, 0x6c, 0x6f, 0x14, 0x77, 0x6f, 0x72, 0x6c, 0x64];
         expectedResult = expectedResult.concat(longStr).concat(asciiStr);
@@ -47,7 +47,7 @@ describe("StringArray", () => {
         expect<i32>(scaleStrArray.values.length).toStrictEqual(2);
         expect<string>(scaleStrArray.values[0]).toStrictEqual("hello");
         expect<string>(scaleStrArray.values[1]).toStrictEqual("world");
-    })
+    });
 
     it("should decode long string array with populate method", () => {
         const str = "The 1963 Impala featured rectilinear styling with an engine-turned aluminum rear taillight panel surrounded by a chrome border on SS models.";
@@ -59,7 +59,7 @@ describe("StringArray", () => {
         expect<string>(scaleStrArray.values[2]).toStrictEqual("wonderful_life");
         expect<string>(scaleStrArray.values[3]).toStrictEqual("™ ± Ã ¿ £ µ");
         expect<string>(scaleStrArray.values[4]).toStrictEqual(repeatString(str, 500));
-    })
+    });
 
     itThrows("should throw on incorrect encoding", () => {
         const invalidEncodedArray1: u8[] = [0x10, 0x04];
@@ -99,7 +99,7 @@ function _getEncodedStrArray(): Array<u8>{
     Bytes.copy(scaleStr.toU8a(), encodedStrArray, encodedStrArray.length);
     Bytes.copy<u8>([0x14, 0x77, 0x6f, 0x72, 0x6c, 0x64], encodedStrArray, encodedStrArray.length);
     Bytes.copy<u8>([0x38, 0x77, 0x6f, 0x6e, 0x64, 0x65, 0x72, 0x66, 0x75, 0x6c, 0x5f, 0x6c, 0x69, 0x66, 0x65], encodedStrArray, encodedStrArray.length);
-    Bytes.copy<u8>([0x48, 0xe2, 0x84, 0xa2, 0x20, 0xc2, 0xb1, 0x20, 0xc3, 0x83, 0x20, 0xc2, 0xbf, 0x20, 0xc2, 0xa3, 0x20, 0xc2, 0xb5], encodedStrArray, encodedStrArray.length)
+    Bytes.copy<u8>([0x48, 0xe2, 0x84, 0xa2, 0x20, 0xc2, 0xb1, 0x20, 0xc3, 0x83, 0x20, 0xc2, 0xbf, 0x20, 0xc2, 0xa3, 0x20, 0xc2, 0xb5], encodedStrArray, encodedStrArray.length);
     Bytes.copy(scaleStr.toU8a(), encodedStrArray, encodedStrArray.length);
     return encodedStrArray;
 }

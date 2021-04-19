@@ -46,7 +46,7 @@ export class ByteArray extends AbstractArray<Byte, u8> {
         return new DecodedData<u8>(
             scaleByte.unwrap(),
             scaleByte.encodedLength()
-        )
+        );
     }
 
     /**
@@ -55,7 +55,7 @@ export class ByteArray extends AbstractArray<Byte, u8> {
     public encodedLength(): i32{
         return (new CompactInt(this.values.length).encodedLength()) + super.values.length;
     }
-    
+
     /**
      * @description Non-static constructor method used to populate defined properties of the model
      * @param bytes SCALE encoded bytes
@@ -77,12 +77,12 @@ export class ByteArray extends AbstractArray<Byte, u8> {
         return AbstractArray.fromU8a<ByteArray>(input.slice(index));
     }
 
-    @inline @operator('==')
+    @inline @operator("==")
     static eq(a: ByteArray, b: ByteArray): bool {
         return a.eq(b);
     }
 
-    @inline @operator('!=')
+    @inline @operator("!=")
     static notEq(a: ByteArray, b: ByteArray): bool {
         return a.notEq(b);
     }

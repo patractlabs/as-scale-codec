@@ -16,8 +16,8 @@ import { UnwrappableCodec } from "../interfaces/UnwrappableCodec";
 import { BIT_LENGTH, Bytes } from "../utils/Bytes";
 import { BytesBuffer } from "../utils/BytesBuffer";
 
-/** 
- * @description Representation for a CompactInt value in the system. 
+/**
+ * @description Representation for a CompactInt value in the system.
 */
 export class CompactInt implements UnwrappableCodec<i64> {
 
@@ -65,7 +65,7 @@ export class CompactInt implements UnwrappableCodec<i64> {
 
     /**
      * Internal private function to compute bit length of the value
-     * @param value 
+     * @param value
      */
     static _computeBitLength(value: u64): i32 {
         if (value < 1 << 6) return BIT_LENGTH.INT_8;
@@ -93,7 +93,7 @@ export class CompactInt implements UnwrappableCodec<i64> {
 
     /**
      * @description Instantiates Compact Int from u8[] SCALE encoded bytes
-     * Compact Int decodes int8, int16, int32, int64 size correctly  
+     * Compact Int decodes int8, int16, int32, int64 size correctly
      * @param input SCALE encoded bytes
      * @param index an index of input to start decoding from
      */
@@ -103,12 +103,12 @@ export class CompactInt implements UnwrappableCodec<i64> {
         return new CompactInt(decodedData.value);
     }
 
-    @inline @operator('==')
+    @inline @operator("==")
     static eq(a: CompactInt, b: CompactInt): bool {
         return a.eq(b);
     }
 
-    @inline @operator('!=')
+    @inline @operator("!=")
     static notEq(a: CompactInt, b: CompactInt): bool {
         return a.notEq(b);
     }

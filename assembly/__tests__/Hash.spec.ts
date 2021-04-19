@@ -72,30 +72,30 @@ describe("Hash", () => {
 
     it("should return hex representation of a hash", () => {
         let hash: Hash = new Hash([0xff]);
-        expect<string>(hash.toString()).toStrictEqual('0x2550000000000000000000000000000000');
+        expect<string>(hash.toString()).toStrictEqual("0x2550000000000000000000000000000000");
 
         hash = new Hash([0xff, 0x00, 0xff]);
-        expect<string>(hash.toString()).toStrictEqual('0x255025500000000000000000000000000000');
+        expect<string>(hash.toString()).toStrictEqual("0x255025500000000000000000000000000000");
 
         hash = new Hash([0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff]);
-        expect<string>(hash.toString()).toStrictEqual('0x255000000000000000000000000000000255');
+        expect<string>(hash.toString()).toStrictEqual("0x255000000000000000000000000000000255");
     });
 
     it("equals should work", () => {
         let hash: Hash = new Hash([0xff]);
         let hash2: Hash = new Hash([0xff]);
 
-        assert(hash == hash2, "hashes are not equal")
-    })
+        assert(hash == hash2, "hashes are not equal");
+    });
 
     it("should not be equal when hashes are different", () => {
         let hash1: Hash = new Hash([0x01]);
         let hash2: Hash = new Hash([0xff]);
 
         assert(hash1 != hash2, "hashes should be different");
-    })
+    });
 
-    itThrows('should throw when index is out of range', () => {
+    itThrows("should throw when index is out of range", () => {
         Hash.fromU8a([8, 0, 1, 12, 0, 1, 12], 8);
     });
 });

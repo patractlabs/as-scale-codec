@@ -19,25 +19,25 @@ import { BIT_LENGTH } from "../utils/Bytes";
 export class UInt8 extends AbstractInt<u8> {
 
     constructor (value: u8 = 0) {
-        super(value, BIT_LENGTH.INT_8)
+        super(value, BIT_LENGTH.INT_8);
     }
 
     /**
-     * @description Instantiates new UInt8 from u8[] SCALE encoded bytes  
-     * NOTE: if the length of the provided value is less than the byte length of the UInt8, 
+     * @description Instantiates new UInt8 from u8[] SCALE encoded bytes
+     * NOTE: if the length of the provided value is less than the byte length of the UInt8,
      * it is filled with 0 bytes
      */
     static fromU8a (value: u8[], index: i32 = 0): UInt8 {
-        assert(value.length - index > 0, 'Uint8: cannot decode invalid u8 encoded value');
+        assert(value.length - index > 0, "Uint8: cannot decode invalid u8 encoded value");
         return new UInt8(value[index]);
     }
 
-    @inline @operator('==')
+    @inline @operator("==")
     static eq(a: UInt8, b: UInt8): bool {
         return a.eq(b);
     }
 
-    @inline @operator('!=')
+    @inline @operator("!=")
     static notEq(a: UInt8, b: UInt8): bool {
         return a.notEq(b);
     }

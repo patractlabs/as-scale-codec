@@ -63,7 +63,7 @@ describe("IntArray", () => {
             result.populateFromBytes(dataInput[i]);
             expect<IntArray>(result).toStrictEqual(new IntArray(expectedOutput[i]));
         }
-    })
+    });
 
     itThrows("should throw on incorrect encoding", () => {
         const invalidEncodedArray1: u8[] = [0x10, 0x04];

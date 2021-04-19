@@ -21,7 +21,7 @@ import { BIT_LENGTH } from "../utils/Bytes";
 export class UInt128 implements UnwrappableCodec<u128> {
 
     private _value: u128;
-    
+
     constructor (value: u128 = u128.Zero) {
         this._value = value;
     }
@@ -32,14 +32,14 @@ export class UInt128 implements UnwrappableCodec<u128> {
     unwrap(): u128{
         return this._value;
     }
-    
-    /** 
-     * @description Encodes the value as u8[] as per the SCALE codec specification 
+
+    /**
+     * @description Encodes the value as u8[] as per the SCALE codec specification
      * */
     toU8a (): u8[] {
         return ArrayUtils.toU8Array(this._value.toUint8Array(false));
     }
-    
+
     toString(): string {
         return this._value.toString();
     }
@@ -49,7 +49,7 @@ export class UInt128 implements UnwrappableCodec<u128> {
      * @param index index to start decoding the bytes from
      */
     populateFromBytes(bytes: u8[], index: i32 = 0): void{
-        assert(bytes.length - index > 0, 'Invalid input: Byte array should not be empty');
+        assert(bytes.length - index > 0, "Invalid input: Byte array should not be empty");
         this._value = u128.fromBytesLE(bytes.slice(index));
     }
     /**
@@ -61,7 +61,7 @@ export class UInt128 implements UnwrappableCodec<u128> {
 
     /** Instantiates new UInt128 from u8[] SCALE encoded bytes */
     static fromU8a(input: u8[], index: i32 = 0): UInt128 {
-        assert(input.length - index != 0, 'Invalid input: Byte array should not be empty');
+        assert(input.length - index != 0, "Invalid input: Byte array should not be empty");
         return new UInt128(u128.fromBytesLE(input.slice(index)));
     }
 

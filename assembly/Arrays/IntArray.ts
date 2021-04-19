@@ -30,7 +30,7 @@ export class IntArray extends AbstractArray<CompactInt, i64> {
         return new DecodedData<u64>(
             compactInt.unwrap(),
             compactInt.encodedLength()
-        )
+        );
     }
 
     /**
@@ -65,12 +65,12 @@ export class IntArray extends AbstractArray<CompactInt, i64> {
         return AbstractArray.fromU8a<IntArray>(input);
     }
 
-    @inline @operator('==')
+    @inline @operator("==")
     static eq(a: IntArray, b: IntArray): bool {
         return a.eq(b);
     }
 
-    @inline @operator('!=')
+    @inline @operator("!=")
     static notEq(a: IntArray, b: IntArray): bool {
         return a.notEq(b);
     }

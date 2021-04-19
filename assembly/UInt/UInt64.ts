@@ -19,12 +19,12 @@ import { BIT_LENGTH, Bytes } from "../utils/Bytes";
 export class UInt64 extends AbstractInt<u64> {
 
     constructor (value: u64 = 0) {
-        super(value, BIT_LENGTH.INT_64)
+        super(value, BIT_LENGTH.INT_64);
     }
 
     /**
-     * @description Instantiates new UInt64 from u8[] SCALE encoded bytes  
-     * NOTE: if the length of the provided value is less than the byte length of the UInt64, 
+     * @description Instantiates new UInt64 from u8[] SCALE encoded bytes
+     * NOTE: if the length of the provided value is less than the byte length of the UInt64,
      * it is filled with 0 bytes
      */
     static fromU8a (value: u8[], index: i32 = 0): UInt64 {
@@ -33,12 +33,12 @@ export class UInt64 extends AbstractInt<u64> {
         return new UInt64(res);
     }
 
-    @inline @operator('==')
+    @inline @operator("==")
     static eq(a: UInt64, b: UInt64): bool {
         return a.eq(b);
     }
 
-    @inline @operator('!=')
+    @inline @operator("!=")
     static notEq(a: UInt64, b: UInt64): bool {
         return a.notEq(b);
     }

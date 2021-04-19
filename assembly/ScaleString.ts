@@ -55,8 +55,8 @@ export class ScaleString extends ByteArray {
 
     /**
      * Internal private function to compute the string value from the bytes
-     * @param bytes 
-     * @param index 
+     * @param bytes
+     * @param index
      */
     static _computeValueStr(bytes: u8[], index: i32 = 0): string {
         const len = Bytes.decodeCompactInt(bytes, index);
@@ -64,7 +64,7 @@ export class ScaleString extends ByteArray {
         const stringStart = i32(len.decBytes);
         assert(bytes.length - index - len.decBytes >= 1, "ScaleString: Incorrectly encoded input");
         const buff = new Uint8Array(bytesLength);
-        Bytes.copyToTyped(bytes, buff, 0, index+stringStart);
+        Bytes.copyToTyped(bytes, buff, 0, index + stringStart);
         return String.UTF8.decode(buff.buffer);
     }
     /**
@@ -74,12 +74,12 @@ export class ScaleString extends ByteArray {
         return new ScaleString(ScaleString._computeValueStr(input, index));
     }
 
-    @inline @operator('==')
+    @inline @operator("==")
     static eq(a: ScaleString, b: ScaleString): bool {
         return a.eq(b);
     }
 
-    @inline @operator('!=')
+    @inline @operator("!=")
     static notEq(a: ScaleString, b: ScaleString): bool {
         return a.notEq(b);
     }

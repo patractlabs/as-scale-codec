@@ -38,7 +38,7 @@ export interface Codec {
 
     /**
      * Checks if an instance is equal with other instance
-     * @param other other instance     
+     * @param other other instance
     */
     eq(other: Codec): bool;
 

@@ -1,6 +1,5 @@
 <h2 align="center">AssemblyScript SCALE Codec</h2>
 
-
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 ![Tests](https://github.com/LimeChain/as-scale-codec/workflows/Tests/badge.svg)
 [![npm version](https://img.shields.io/npm/v/as-scale-codec?color=light-green&label=npm%20package)](https://img.shields.io/npm/v/as-scale-codec?color=light-green&label=npm%20package)
@@ -12,44 +11,46 @@ More detailed information about the SCALE codec specification can be found [here
 
 This AssemblyScript implementation of the codec is funded by [Web3 Foundation](https://web3.foundation/) via their [Open Grants Program](https://github.com/w3f/Open-Grants-Program)! :pray:
 ![WEB3 Badge](./web3_badge_black.png)
+
 # Supported types
+
 The following table shows the status of the types and their arrays:
 
-|       Type        |       Support      | Array Support | 
-|----------------------|:--------------------:|:------:|
-| `Fixed width number` | ✅ | ✅ |
-| `Compact Int`        | ✅ |✅ |
-| `Big Integer` | :small_orange_diamond: *Limited Support* | :small_orange_diamond: *Limited Support* |
-| `Byte` |✅ |✅ | 
-| `Bool` | ✅| ✅|
-| `Hash` |✅ | :heavy_minus_sign: |
-| `String` | ✅|✅ | 
-| `Map` |✅| :heavy_minus_sign: | 
+| Type                 |                 Support                  |              Array Support               |
+| -------------------- | :--------------------------------------: | :--------------------------------------: |
+| `Fixed width number` |                    ✅                    |                    ✅                    |
+| `Compact Int`        |                    ✅                    |                    ✅                    |
+| `Big Integer`        | :small_orange_diamond: _Limited Support_ | :small_orange_diamond: _Limited Support_ |
+| `Byte`               |                    ✅                    |                    ✅                    |
+| `Bool`               |                    ✅                    |                    ✅                    |
+| `Hash`               |                    ✅                    |            :heavy_minus_sign:            |
+| `String`             |                    ✅                    |                    ✅                    |
+| `Map`                |                    ✅                    |            :heavy_minus_sign:            |
 
 The following table shows the status of the fixed width numbers:
 
-| Тype | `8` | `16` | `32` | `64` | `128` | `256` | 
-|--|:--:|:--:|:--:|:--:|:--:|:--:|
-| `int` | ✅ | ✅| ✅|✅ | :heavy_minus_sign:|  :heavy_minus_sign:|
-| `uint` | ✅ | ✅| ✅|✅ |✅ |:heavy_minus_sign:|
-
+| Тype   | `8` | `16` | `32` | `64` |       `128`        |       `256`        |
+| ------ | :-: | :--: | :--: | :--: | :----------------: | :----------------: |
+| `int`  | ✅  |  ✅  |  ✅  |  ✅  | :heavy_minus_sign: | :heavy_minus_sign: |
+| `uint` | ✅  |  ✅  |  ✅  |  ✅  |         ✅         | :heavy_minus_sign: |
 
 ## Special Types
 
-- **Compact Int** - [Documentation](https://substrate.dev/docs/en/knowledgebase/advanced/codec#compactgeneral-integers)
+-   **Compact Int** - [Documentation](https://substrate.dev/docs/en/knowledgebase/advanced/codec#compactgeneral-integers)
 
-## **Getting Started**  
-*You can find more information on AssemblyScript and how to get started with it in the AssemblyScript docs -> [https://www.assemblyscript.org/introduction.html](https://www.assemblyscript.org/introduction.html)*
+## **Getting Started**
+
+_You can find more information on AssemblyScript and how to get started with it in the AssemblyScript docs -> [https://www.assemblyscript.org/introduction.html](https://www.assemblyscript.org/introduction.html)_
 
 1. In your AssemblyScript project execute:
 
     ```bash
     npm install as-scale-codec
     ```
+
 2. Once you have the library installed in your AssemblyScript project you can use it in your `assembly` files by importing the files from `as-scale-codec`.
- 
+
 Detailed examples of the exported by the library types are listed below:
-  
 
 ## Types
 
@@ -76,7 +77,7 @@ scaleByte.toU8a() // => [0x01]
 
 // String
 const scaleString = new ScaleString("a");
-scaleString.toU8a() // => [0x04, 0x61] 
+scaleString.toU8a() // => [0x04, 0x61]
 
 // Hash
 const scaleHash = new Hash([0xff, 0x00, 0xab]);
@@ -135,7 +136,7 @@ Byte.fromU8a([0x01]); // => new Byte(0x01)
 Byte.fromU8a([0x04, 0x61]); // => new ScaleString('a')
 
 // Hash
-Hash.fromU8a([0xff, 0x00, 0xab]); 
+Hash.fromU8a([0xff, 0x00, 0xab]);
 // => [0xff, 0x00, 0xab, 0x00, ... 0x00] (32 bytes long)
 
 ScaleMap<Int32, Bool>.fromU8a([4, 1, 0, 0, 0, 0]);
@@ -167,7 +168,7 @@ UInt128.fromU8a([0x33, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0xf
 Every array has **toU8a** function. It encodes the array values into an array of SCALE encoded bytes.
 
 ```jsx
-import { BoolArray, ByteArray, IntArray, StringArray } from "as-scale-codec"
+import { BoolArray, ByteArray, IntArray, StringArray } from "as-scale-codec";
 
 // Bool Array
 const boolArray = new BoolArray([true, false, true]);
@@ -179,11 +180,11 @@ byteArray.toU8a(); // => [0x0c, 0x01, 0x01, 0x01]
 
 // Int Array
 const intArray = new IntArray([16384, 2, 3, 4]);
-intArray.toU8a() // => [0x10, 0x02, 0x00, 0x01, 0x00, 0x08, 0x0c, 0x10]
+intArray.toU8a(); // => [0x10, 0x02, 0x00, 0x01, 0x00, 0x08, 0x0c, 0x10]
 
 // String Array
 const stringArray = new StringArray(["hello", "world"]);
-stringArray.toU8a() // => [0x08, 0x14, 0x68, 0x65, 0x6c, 0x6c, 0x6f, 0x14, 0x77, 0x6f, 0x72, 0x6c, 0x64]
+stringArray.toU8a(); // => [0x08, 0x14, 0x68, 0x65, 0x6c, 0x6c, 0x6f, 0x14, 0x77, 0x6f, 0x72, 0x6c, 0x64]
 ```
 
 ### Decoding
@@ -191,22 +192,36 @@ stringArray.toU8a() // => [0x08, 0x14, 0x68, 0x65, 0x6c, 0x6c, 0x6f, 0x14, 0x77,
 Every array has a **static** function **fromU8a**. It decodes an array of SCALE encoded bytes and creates an array instance of the desired type.
 
 ```jsx
-import { BoolArray, ByteArray, IntArray, StringArray } from "as-scale-codec"
+import { BoolArray, ByteArray, IntArray, StringArray } from "as-scale-codec";
 
 // Bool Array
-BoolArray.fromU8a([0x0c, 0x01, 0x00, 0x01]); 
+BoolArray.fromU8a([0x0c, 0x01, 0x00, 0x01]);
 // => new BoolArray([true, false, true])
 
 // Byte Array
-ByteArray.fromU8a([0x0c, 0x01, 0x01, 0x01])
+ByteArray.fromU8a([0x0c, 0x01, 0x01, 0x01]);
 // => new ByteArray([0x01, 0x01, 0x01])
 
 // Int Array
-IntArray.fromU8a([0x10, 0x02, 0x00, 0x01, 0x00, 0x08, 0x0c, 0x10])
+IntArray.fromU8a([0x10, 0x02, 0x00, 0x01, 0x00, 0x08, 0x0c, 0x10]);
 // => new IntArray([16384, 2, 3, 4])
 
 // String Array
-StringArray.fromU8a([0x08, 0x14, 0x68, 0x65, 0x6c, 0x6c, 0x6f, 0x14, 0x77, 0x6f, 0x72, 0x6c, 0x64])
+StringArray.fromU8a([
+    0x08,
+    0x14,
+    0x68,
+    0x65,
+    0x6c,
+    0x6c,
+    0x6f,
+    0x14,
+    0x77,
+    0x6f,
+    0x72,
+    0x6c,
+    0x64,
+]);
 // => new StringArray(["hello", "world"])
 ```
 
@@ -288,7 +303,7 @@ BytesReader.decodeInto<Int8>(int8Bytes);
 ### Convert bytes to hash
 
 ```jsx
-Hash.bytesToHash([0xff, 0x00, 0xab]); 
+Hash.bytesToHash([0xff, 0x00, 0xab]);
 // => [0x00, ... , 0x00, 0xff, 0x00, 0xab] (32 bytes long)
 
 Hash.bytesToHash([0xff, 0x00, ..., 0x00]); // (32 bytes long)
@@ -304,4 +319,5 @@ npm run test
 ```
 
 # **License**
+
 This repository is licensed under [Apache 2.0 license](https://github.com/LimeChain/as-scale-codec/blob/master/LICENSE)

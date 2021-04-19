@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { UnwrappableCodec } from './interfaces/UnwrappableCodec';
-import { Bytes } from './utils/Bytes';
+import { UnwrappableCodec } from "./interfaces/UnwrappableCodec";
+import { Bytes } from "./utils/Bytes";
 
 export class Hash implements UnwrappableCodec<Array<u8>> {
 
@@ -30,7 +30,7 @@ export class Hash implements UnwrappableCodec<Array<u8>> {
     public unwrap(): Array<u8>{
         return this._values;
     }
-    
+
     /**
     * @description  Encodes Hash as u8[] as per the SCALE codec specification
     */
@@ -40,7 +40,7 @@ export class Hash implements UnwrappableCodec<Array<u8>> {
 
         return result;
     }
-    
+
     /**
      * @description Non-static constructor method used to populate defined properties of the model.
      * @param bytes SCALE encoded bytes
@@ -56,7 +56,7 @@ export class Hash implements UnwrappableCodec<Array<u8>> {
     * @description  Return string representation of Hash
     */
     public toString (): string {
-        return "0x" + this._values.join('');
+        return "0x" + this._values.join("");
     }
 
     /**
@@ -105,12 +105,12 @@ export class Hash implements UnwrappableCodec<Array<u8>> {
         return !this.eq(other);
     }
 
-    @inline @operator('==')
+    @inline @operator("==")
     static eq(a: Hash, b: Hash): bool {
         return a.eq(b);
     }
 
-    @inline @operator('!=')
+    @inline @operator("!=")
     static notEq(a: Hash, b: Hash): bool {
         return a.notEq(b);
     }

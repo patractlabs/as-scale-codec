@@ -26,7 +26,7 @@ export abstract class AbstractArray<ScaleType extends Codec, NativeType> impleme
         this.values = new Array<NativeType>(input.length);
         Bytes.copy<NativeType>(input, this.values);
     }
-    
+
     /**
      * @description Returns the inner native value
      */
@@ -36,12 +36,12 @@ export abstract class AbstractArray<ScaleType extends Codec, NativeType> impleme
 
     public eq(other: AbstractArray<ScaleType, NativeType>): bool{
         return ArrayUtils.areArraysEqual(this.values, other.values);
-    };
-    
+    }
+
     public notEq(other: AbstractArray<ScaleType, NativeType>): bool{
         return !ArrayUtils.areArraysEqual(this.values, other.values);
-    };
-    
+    }
+
     /**
     * @description  Encodes values of all elements in u8[] successively as per the SCALE codec specification
     */
@@ -61,7 +61,7 @@ export abstract class AbstractArray<ScaleType extends Codec, NativeType> impleme
      * @description Returns encoded byte length of the type
      */
     abstract encodedLength(): i32;
-    
+
     /**
      * @description Non-static constructor method used to populate defined properties of the model
      * @param bytes SCALE encoded bytes
