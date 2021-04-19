@@ -5,6 +5,10 @@
 [![npm version](https://img.shields.io/npm/v/as-scale-codec?color=light-green&label=npm%20package)](https://img.shields.io/npm/v/as-scale-codec?color=light-green&label=npm%20package)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/LimeChain/as-scale-codec)
 
+Forked from [as-scale-code](https://github.com/LimeChain/as-scale-codec).
+
+<!-- TODO: update readme -->
+
 **as-scale-codec** is AssemblyScript implementation of Polkadot SCALE Codec. The codec is used as a communication mechanism between Polkadot Hosts and Polkadot Runtimes.
 
 More detailed information about the SCALE codec specification can be found [here](https://substrate.dev/docs/en/knowledgebase/advanced/codec).
@@ -16,16 +20,16 @@ This AssemblyScript implementation of the codec is funded by [Web3 Foundation](h
 
 The following table shows the status of the types and their arrays:
 
-| Type                 |                 Support                  |              Array Support               |
-| -------------------- | :--------------------------------------: | :--------------------------------------: |
-| `Fixed width number` |                    ✅                    |                    ✅                    |
-| `Compact Int`        |                    ✅                    |                    ✅                    |
-| `Big Integer`        | :small_orange_diamond: _Limited Support_ | :small_orange_diamond: _Limited Support_ |
-| `Byte`               |                    ✅                    |                    ✅                    |
-| `Bool`               |                    ✅                    |                    ✅                    |
-| `Hash`               |                    ✅                    |            :heavy_minus_sign:            |
-| `String`             |                    ✅                    |                    ✅                    |
-| `Map`                |                    ✅                    |            :heavy_minus_sign:            |
+| Type                 |                  Support                  |               Array Support               |
+| -------------------- | :---------------------------------------: | :---------------------------------------: |
+| `Fixed width number` |                    ✅                     |                    ✅                     |
+| `Compact Int`        |                    ✅                     |                    ✅                     |
+| `Big Integer`        | :small*orange_diamond: \_Limited Support* | :small*orange_diamond: \_Limited Support* |
+| `Byte`               |                    ✅                     |                    ✅                     |
+| `Bool`               |                    ✅                     |                    ✅                     |
+| `Hash`               |                    ✅                     |            :heavy_minus_sign:             |
+| `String`             |                    ✅                     |                    ✅                     |
+| `Map`                |                    ✅                     |            :heavy_minus_sign:             |
 
 The following table shows the status of the fixed width numbers:
 
@@ -36,7 +40,7 @@ The following table shows the status of the fixed width numbers:
 
 ## Special Types
 
--   **Compact Int** - [Documentation](https://substrate.dev/docs/en/knowledgebase/advanced/codec#compactgeneral-integers)
+- **Compact Int** - [Documentation](https://substrate.dev/docs/en/knowledgebase/advanced/codec#compactgeneral-integers)
 
 ## **Getting Started**
 

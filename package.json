@@ -1,11 +1,12 @@
 {
   "name": "as-scale-codec",
-  "version": "0.2.1",
+  "version": "0.1.0",
   "description": "AssemblyScript implementation of the SCALE codec used in the Parity Substrate framework",
-  "main": "./assembly/index.ts",
+  "main": "./index.ts",
   "contributors": [
     "Daniel Ivanov <daniel-k-ivanov>",
-    "Lyubomir Kiprov <bakasura980>"
+    "Lyubomir Kiprov <bakasura980>",
+    "yjhmelody <yjh465402634@gmail.com>"
   ],
   "scripts": {
     "lint": "eslint .",
@@ -15,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/LimeChain/assemblyscript-scale-codec.git"
+    "url": "git+https://github.com/patractlabs/as-scale-codec.git"
   },
   "keywords": [
     "assemblyscript",
@@ -25,9 +26,9 @@
   ],
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/LimeChain/assemblyscript-scale-codec/issues"
+    "url": "https://github.com/patractlabs/as-scale-codec/issues"
   },
-  "homepage": "https://github.com/LimeChain/assemblyscript-scale-codec#readme",
+  "homepage": "https://github.com/patractlabs/as-scale-codec",
   "dependencies": {
     "as-bignum": "0.2.15"
   },
