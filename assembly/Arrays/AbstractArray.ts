@@ -19,8 +19,8 @@ import { ArrayUtils } from "../utils/Arrays";
 import { Bytes } from "../utils/Bytes";
 import { BytesBuffer } from "../utils/BytesBuffer";
 
-export abstract class AbstractArray<ScaleType extends Codec, NativeType> implements UnwrappableCodec<Array<NativeType>>{
-
+export abstract class AbstractArray<ScaleType extends Codec, NativeType>
+    implements UnwrappableCodec<Array<NativeType>> {
     public values: Array<NativeType>;
     constructor(input: NativeType[] = []) {
         this.values = new Array<NativeType>(input.length);
@@ -30,22 +30,22 @@ export abstract class AbstractArray<ScaleType extends Codec, NativeType> impleme
     /**
      * @description Returns the inner native value
      */
-    public unwrap(): Array<NativeType>{
+    public unwrap(): Array<NativeType> {
         return this.values;
     }
 
-    public eq(other: AbstractArray<ScaleType, NativeType>): bool{
+    public eq(other: AbstractArray<ScaleType, NativeType>): bool {
         return ArrayUtils.areArraysEqual(this.values, other.values);
     }
 
-    public notEq(other: AbstractArray<ScaleType, NativeType>): bool{
+    public notEq(other: AbstractArray<ScaleType, NativeType>): bool {
         return !ArrayUtils.areArraysEqual(this.values, other.values);
     }
 
     /**
-    * @description  Encodes values of all elements in u8[] successively as per the SCALE codec specification
-    */
-    public toU8a (): u8[] {
+     * @description  Encodes values of all elements in u8[] successively as per the SCALE codec specification
+     */
+    public toU8a(): u8[] {
         const bytesBuffer = new BytesBuffer();
         bytesBuffer.encodeCompactInt(this.values.length);
 
@@ -67,17 +67,17 @@ export abstract class AbstractArray<ScaleType extends Codec, NativeType> impleme
      * @param bytes SCALE encoded bytes
      * @param index index to start decoding the bytes from
      */
-    abstract populateFromBytes(bytes: u8[], index: i32): void;
+    abstract populateFromBytes(bytes: u8[], index: i32): i32;
 
     /**
-    * @description Each child class has to provide decryption implementation for elements
-    */
-    public abstract decodeElement (value: u8[]): DecodedData<NativeType>;
+     * @description Each child class has to provide decryption implementation for elements
+     */
+    public abstract decodeElement(value: u8[]): DecodedData<NativeType>;
 
     /**
-    * @description  Instantiates type of ScaleArray from u8[] SCALE encoded bytes (Decode)
-    */
-    static fromU8a<TypeOfScaleArray> (input: u8[]): TypeOfScaleArray {
+     * @description  Instantiates type of ScaleArray from u8[] SCALE encoded bytes (Decode)
+     */
+    static fromU8a<TypeOfScaleArray>(input: u8[]): TypeOfScaleArray {
         const data = Bytes.decodeCompactInt(input);
         let bytes = input.slice(data.decBytes);
 

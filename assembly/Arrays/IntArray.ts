@@ -17,14 +17,12 @@ import { CompactInt } from "../Int/CompactInt";
 import { DecodedData } from "../interfaces/DecodedData";
 import { AbstractArray } from "./AbstractArray";
 
-
 // @ts-ignore
 export class IntArray extends AbstractArray<CompactInt, i64> {
-
     /**
-    * @description BoolArray elements decryption implementation
-    */
-    public decodeElement (value: u8[]): DecodedData<u64> {
+     * @description BoolArray elements decryption implementation
+     */
+    public decodeElement(value: u8[]): DecodedData<u64> {
         const compactInt = CompactInt.fromU8a(value);
 
         return new DecodedData<u64>(
@@ -36,9 +34,9 @@ export class IntArray extends AbstractArray<CompactInt, i64> {
     /**
      * @description Returns encoded byte length of the type
      */
-    public encodedLength(): i32{
+    public encodedLength(): i32 {
         let len: i32 = new CompactInt(this.values.length).encodedLength();
-        for (let i: i32 = 0; i < this.values.length; i++){
+        for (let i: i32 = 0; i < this.values.length; i++) {
             const value = new CompactInt(this.values[i]);
             len += value.encodedLength();
         }
@@ -49,30 +47,32 @@ export class IntArray extends AbstractArray<CompactInt, i64> {
      * @param bytes SCALE encoded bytes
      * @param index index to start decoding the bytes from
      */
-    populateFromBytes(bytes: u8[], index: i32 = 0): void {
-        const bytesReader = new BytesReader(bytes.slice(index));
+    populateFromBytes(bytes: u8[], index: i32 = 0): i32 {
+        const bytesReader = new BytesReader(bytes, index);
         const data = bytesReader.readInto<CompactInt>();
 
-        for(let i: i32 = 0; i < data.unwrap(); i++){
+        for (let i: i32 = 0; i < data.unwrap(); i++) {
             const element: CompactInt = bytesReader.readInto<CompactInt>();
             this.values.push(element.unwrap());
         }
+        return bytesReader.currentIndex();
     }
     /**
-    * @description Instantiates ScaleIntArray from u8[] SCALE encoded bytes (Decode)
-    */
-    static fromU8a (input: u8[]): IntArray {
+     * @description Instantiates ScaleIntArray from u8[] SCALE encoded bytes (Decode)
+     */
+    static fromU8a(input: u8[]): IntArray {
         return AbstractArray.fromU8a<IntArray>(input);
     }
 
-    @inline @operator("==")
+    @inline
+    @operator("==")
     static eq(a: IntArray, b: IntArray): bool {
         return a.eq(b);
     }
 
-    @inline @operator("!=")
+    @inline
+    @operator("!=")
     static notEq(a: IntArray, b: IntArray): bool {
         return a.notEq(b);
     }
 }
-

@@ -39,13 +39,14 @@ export class UInt128Array extends AbstractArray<UInt128, u128> {
      * @param bytes SCALE encoded bytes
      * @param index index to start decoding the bytes from
      */
-    populateFromBytes(bytes: u8[], index: i32 = 0): void {
-        const bytesReader = new BytesReader(bytes.slice(index));
+    populateFromBytes(bytes: u8[], index: i32 = 0): i32 {
+        const bytesReader = new BytesReader(bytes, index);
         const data = bytesReader.readInto<CompactInt>();
         for(let i: i32 = 0; i < data.unwrap(); i++){
             const element: UInt128 = BytesReader.decodeInto<UInt128>(bytesReader.readBytes(BIT_LENGTH.INT_128));
             this.values.push(element.unwrap());
         }
+        return bytesReader.currentIndex();
     }
 
     /**

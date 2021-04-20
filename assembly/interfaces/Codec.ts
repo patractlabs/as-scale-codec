@@ -34,7 +34,7 @@ export interface Codec {
      * @param bytes SCALE encoded bytes
      * @param index index to start decoding the bytes from
      */
-    populateFromBytes(bytes: u8[], index: i32): void;
+    populateFromBytes(bytes: u8[], index: i32): i32;
 
     /**
      * Checks if an instance is equal with other instance
