@@ -1,5 +1,5 @@
 {
-  "name": "as-scale-codec",
+  "name": "@patract/as-scale-codec",
   "version": "0.1.0",
   "description": "AssemblyScript implementation of the SCALE codec used in the Parity Substrate framework",
   "main": "./index.ts",

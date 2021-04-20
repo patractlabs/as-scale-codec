@@ -83,6 +83,7 @@ export class ScaleMap<K extends Codec, V extends Codec>
      * Length is encoded first, followed by all key and value encodings concatenated
      */
     toU8a(): u8[] {
+        // TODO: optimize
         let result: u8[] = [];
         let keys: K[] = this.data.keys();
         let lenData: CompactInt = new CompactInt(keys.length);

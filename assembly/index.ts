@@ -9,4 +9,4 @@ export * from "./ScaleMap";
 export * from "./ScaleString";
 export * from "./UInt";
 export * from "./utils/Bytes";
-
+export * from "./Void";

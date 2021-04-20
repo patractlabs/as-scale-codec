@@ -22,6 +22,7 @@ import { BytesBuffer } from "../utils/BytesBuffer";
 export abstract class AbstractArray<ScaleType extends Codec, NativeType>
     implements UnwrappableCodec<Array<NativeType>> {
     public values: Array<NativeType>;
+
     constructor(input: NativeType[] = []) {
         this.values = new Array<NativeType>(input.length);
         Bytes.copy<NativeType>(input, this.values);

@@ -44,9 +44,12 @@ describe("Bool", () => {
 
     it("should decode using populate from bytes", () => {
         const instance = new Bool();
-        instance.populateFromBytes([0]);
+        let index: i32;
+        index = instance.populateFromBytes([0]);
+        expect(index).toBe(1);
         expect<Bool>(instance).toStrictEqual(new Bool(false));
-        instance.populateFromBytes([1]);
+        index = instance.populateFromBytes([0, 0, 1], 2);
+        expect(index).toBe(3);
         expect<Bool>(instance).toStrictEqual(new Bool(true));
     });
 
