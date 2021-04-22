@@ -1,11 +1,16 @@
-name: Tests
+name: CI
 on: [push]
+
 jobs:
-  tests:
+  push:
+    strategy:
+      matrix:
+        step: ['lint', 'test']
+    name: ${{ matrix.step }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: run-tests
+    - name: ${{ matrix.step }}
       run: |
-        npm install
-        npm run test
+        yarn install --immutable
+        yarn ${{ matrix.step }}
