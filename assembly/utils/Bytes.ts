@@ -102,19 +102,19 @@ export class Bytes {
             return new DecodedData<u64>(Bytes.toUint<i64>(tmp, BIT_LENGTH.INT_64), BIT_LENGTH.INT_64);
         }
 
-        throw new Error('CompactInt: Invalid encoding of compact int provided');
+        throw new Error("CompactInt: Invalid encoding of compact int provided");
     }
 
     static decodeSmallInt (input: u8[], mode: u8, index: i32 = 0): DecodedData<u64> {
-        assert(mode == 0 || mode == 1 || mode == 2, 'Small Int: mode is invalid');
+        assert(mode == 0 || mode == 1 || mode == 2, "Small Int: mode is invalid");
         if (mode == 0) {
             return new DecodedData<u64>(u64(Bytes.decodeByte(input[index])), BIT_LENGTH.INT_8);
         } else if (mode == 1) {
             assert(i32(input.length - index) >= BIT_LENGTH.INT_16, "Invalid input: expected 2 bytes array");
-            return new DecodedData<u64>(u64(Bytes.decode2Bytes([input[index], input[index+1]])), BIT_LENGTH.INT_16);
+            return new DecodedData<u64>(u64(Bytes.decode2Bytes([input[index], input[index + 1]])), BIT_LENGTH.INT_16);
         } else {
             assert(i32(input.length - index) >= BIT_LENGTH.INT_32, "Invalid input: expected 4 bytes array");
-            return new DecodedData<u64>(u64(Bytes.decode4Bytes([input[index], input[index+1], input[index+2], input[index+3]])), BIT_LENGTH.INT_32);
+            return new DecodedData<u64>(u64(Bytes.decode4Bytes([input[index], input[index + 1], input[index + 2], input[index + 3]])), BIT_LENGTH.INT_32);
         }
     }
 
@@ -123,7 +123,7 @@ export class Bytes {
     }
 
     static decode2Bytes (bytes: u8[]): i64 {
-        return i64(Bytes.toUint<u16>(bytes, BIT_LENGTH.INT_16) >> 2)
+        return i64(Bytes.toUint<u16>(bytes, BIT_LENGTH.INT_16) >> 2);
     }
 
     static decode4Bytes (bytes: u8[]): i64 {

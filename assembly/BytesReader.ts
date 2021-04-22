@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Codec } from '.';
+import { Codec } from ".";
 
 /**
  * @description BytesReader class that helps reading bytes into SCALE Codec types
  */
-export class BytesReader{
+export class BytesReader {
     /**
      * u8 bytes
      */
@@ -27,14 +27,20 @@ export class BytesReader{
      */
     private index: i32 = 0;
 
-    constructor(bytes: u8[]){
+    constructor(bytes: u8[], index: i32 = 0) {
         this.bytes = bytes;
+        this.index = index;
+    }
+
+    @inline
+    currentIndex(): i32 {
+        return this.index;
     }
 
     /**
      * @description Reads bytes into a given Type
      */
-    readInto<T extends Codec>(): T{
+    readInto<T extends Codec>(): T {
         const instance: T = BytesReader.decodeInto<T>(this.bytes, this.index);
         this.index += instance.encodedLength();
         return instance;
@@ -42,24 +48,24 @@ export class BytesReader{
     /**
      * Returns the unread bytes from the reader
      */
-    getLeftoverBytes(): u8[]{
+    getLeftoverBytes(): u8[] {
         return this.bytes.slice(this.index);
     }
     /**
      * Read custom sized array of raw bytes
      * @param size byte array size
      */
-    readBytes(size: i32): u8[]{
+    readBytes(size: i32): u8[] {
         const bytes: u8[] = this.bytes.slice(this.index, this.index + size);
         this.index += size;
         return bytes;
     }
     /**
      * @description Static variant of readInto() method
-     * @param bytes 
-     * @param index 
+     * @param bytes
+     * @param index
      */
-    static decodeInto<T extends Codec>(bytes: u8[], index: i32 = 0): T{
+    static decodeInto<T extends Codec>(bytes: u8[], index: i32 = 0): T {
         const instance: T = instantiate<T>();
         instance.populateFromBytes(bytes, index);
         return instance;

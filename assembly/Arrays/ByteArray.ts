@@ -20,11 +20,10 @@ import { AbstractArray } from "./AbstractArray";
 
 // @ts-ignore
 export class ByteArray extends AbstractArray<Byte, u8> {
-
     /**
-    * @description  Return hex representation of ByteArray
-    */
-    public toHexString (): string {
+     * @description  Return hex representation of ByteArray
+     */
+    public toHexString(): string {
         let result = "0x";
         for (let i = 0; i < super.values.length; i++) {
             const str = super.values[i].toString(16);
@@ -38,53 +37,58 @@ export class ByteArray extends AbstractArray<Byte, u8> {
         return result;
     }
     /**
-    * @description BoolArray elements decryption implementation
-    */
+     * @description BoolArray elements decryption implementation
+     */
     public decodeElement(value: u8[]): DecodedData<u8> {
         const scaleByte = Byte.fromU8a([value[0]]);
 
         return new DecodedData<u8>(
             scaleByte.unwrap(),
             scaleByte.encodedLength()
-        )
+        );
     }
 
     /**
      * @description Returns encoded byte length of the type
      */
-    public encodedLength(): i32{
-        return (new CompactInt(this.values.length).encodedLength()) + super.values.length;
+    public encodedLength(): i32 {
+        return (
+            new CompactInt(this.values.length).encodedLength() +
+            super.values.length
+        );
     }
-    
+
     /**
      * @description Non-static constructor method used to populate defined properties of the model
      * @param bytes SCALE encoded bytes
      * @param index index to start decoding the bytes from
      */
-    populateFromBytes(bytes: u8[], index: i32 = 0): void {
-        const bytesReader = new BytesReader(bytes.slice(index));
+    populateFromBytes(bytes: u8[], index: i32 = 0): i32 {
+        const bytesReader = new BytesReader(bytes, index);
         const data = bytesReader.readInto<CompactInt>();
 
-        for(let i: i32 = 0; i < data.unwrap(); i++){
+        for (let i: i32 = 0; i < data.unwrap(); i++) {
             const element: Byte = bytesReader.readInto<Byte>();
             this.values.push(element.unwrap());
         }
+        return bytesReader.currentIndex();
     }
     /**
-    * @description Instantiates ScaleByteArray from u8[] SCALE encoded bytes (Decode)
-    */
+     * @description Instantiates ScaleByteArray from u8[] SCALE encoded bytes (Decode)
+     */
     static fromU8a(input: u8[], index: i32 = 0): ByteArray {
         return AbstractArray.fromU8a<ByteArray>(input.slice(index));
     }
 
-    @inline @operator('==')
+    @inline
+    @operator("==")
     static eq(a: ByteArray, b: ByteArray): bool {
         return a.eq(b);
     }
 
-    @inline @operator('!=')
+    @inline
+    @operator("!=")
     static notEq(a: ByteArray, b: ByteArray): bool {
         return a.notEq(b);
     }
 }
-

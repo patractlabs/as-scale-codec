@@ -15,12 +15,11 @@
 import { UnwrappableCodec } from "./interfaces/UnwrappableCodec";
 import { BIT_LENGTH } from "./utils/Bytes";
 
-export class Byte implements UnwrappableCodec<u8>{
-
-    private _value: u8;
+export class Byte implements UnwrappableCodec<u8> {
+    protected _value: u8;
     protected bitLength: i32;
 
-    constructor (value: u8 = 0) {
+    constructor(value: u8 = 0) {
         this._value = value;
         this.bitLength = BIT_LENGTH.INT_8;
     }
@@ -28,14 +27,16 @@ export class Byte implements UnwrappableCodec<u8>{
     /**
      * @description Returns the inner native value
      */
-    public unwrap(): u8{
+    @inline
+    public unwrap(): u8 {
         return this._value;
     }
-    
+
     /**
-    * @description Encodes Byte as u8[] as per the SCALE codec specification
-    */
-    public toU8a (): u8[] {
+     * @description Encodes Byte as u8[] as per the SCALE codec specification
+     */
+    @inline
+    public toU8a(): u8[] {
         return [this._value];
     }
     /**
@@ -43,38 +44,43 @@ export class Byte implements UnwrappableCodec<u8>{
      * @param bytes SCALE encoded bytes
      * @param index index to start decoding the bytes from
      */
-    public populateFromBytes(bytes: u8[], index: i32 = 0): void{
-        assert(bytes.length - index > 0, 'Bool: Cannot decode invalid input');
+    public populateFromBytes(bytes: u8[], index: i32 = 0): i32 {
+        assert(bytes.length - index > 0, "Bool: Cannot decode invalid input");
         this._value = bytes[index];
+        return this.encodedLength() + index;
     }
 
+    @inline
     eq(other: Byte): bool {
         return this._value == other.unwrap();
     }
 
+    @inline
     notEq(other: Byte): bool {
         return this._value != other.unwrap();
     }
-    
+
     /**
-    * @description The length of Byte when the value is encoded
-    */
-    public encodedLength (): i32 {
+     * @description The length of Byte when the value is encoded
+     */
+    public encodedLength(): i32 {
         return this.bitLength;
     }
 
     /** Instantiates new Byte from u8[] SCALE encoded bytes */
-    static fromU8a (value: u8[], index: i32 = 0): Byte {
-        assert(value.length - index > 0, 'Byte: cannot decode invalid type');
+    static fromU8a(value: u8[], index: i32 = 0): Byte {
+        assert(value.length - index > 0, "Byte: cannot decode invalid type");
         return new Byte(value[index]);
     }
 
-    @inline @operator('==')
+    @inline
+    @operator("==")
     static eq(a: Byte, b: Byte): bool {
         return a.eq(b);
     }
 
-    @inline @operator('!=')
+    @inline
+    @operator("!=")
     static notEq(a: Byte, b: Byte): bool {
         return a.notEq(b);
     }

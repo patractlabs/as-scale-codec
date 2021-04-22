@@ -16,10 +16,9 @@ import { ByteArray } from "./Arrays/ByteArray";
 import { Bytes } from "./utils/Bytes";
 
 export class ScaleString extends ByteArray {
+    protected _valueStr: string;
 
-    private _valueStr: string;
-
-    constructor (input: string = "") {
+    constructor(input: string = "") {
         super([]);
         this._valueStr = input;
 
@@ -35,7 +34,7 @@ export class ScaleString extends ByteArray {
      * @param bytes SCALE encoded bytes
      * @param index index to start decoding the bytes from
      */
-    populateFromBytes(bytes: u8[], index: i32 = 0): void{
+    populateFromBytes(bytes: u8[], index: i32 = 0): i32 {
         // constructor
         this._valueStr = ScaleString._computeValueStr(bytes, index);
         const inputBuffer: ArrayBuffer = String.UTF8.encode(this._valueStr);
@@ -44,42 +43,49 @@ export class ScaleString extends ByteArray {
         for (let i = 0; i < u8Input.length; i++) {
             this.values[i] = u8Input[i];
         }
+        return index + this.encodedLength() + index;
     }
 
     /**
      * @description Returns the string representation
      */
-    toString (): string {
+    @inline
+    toString(): string {
         return this._valueStr;
     }
 
     /**
      * Internal private function to compute the string value from the bytes
-     * @param bytes 
-     * @param index 
+     * @param bytes
+     * @param index
      */
     static _computeValueStr(bytes: u8[], index: i32 = 0): string {
         const len = Bytes.decodeCompactInt(bytes, index);
         const bytesLength = i32(len.value);
         const stringStart = i32(len.decBytes);
-        assert(bytes.length - index - len.decBytes >= 1, "ScaleString: Incorrectly encoded input");
+        assert(
+            bytes.length - index - len.decBytes >= 1,
+            "ScaleString: Incorrectly encoded input"
+        );
         const buff = new Uint8Array(bytesLength);
-        Bytes.copyToTyped(bytes, buff, 0, index+stringStart);
+        Bytes.copyToTyped(bytes, buff, 0, index + stringStart);
         return String.UTF8.decode(buff.buffer);
     }
     /**
-    * @description Instantiates String from u8[] SCALE encoded bytes (Decode)
-    */
-    static fromU8a (input: u8[], index: i32 = 0): ScaleString {
+     * @description Instantiates String from u8[] SCALE encoded bytes (Decode)
+     */
+    static fromU8a(input: u8[], index: i32 = 0): ScaleString {
         return new ScaleString(ScaleString._computeValueStr(input, index));
     }
 
-    @inline @operator('==')
+    @inline
+    @operator("==")
     static eq(a: ScaleString, b: ScaleString): bool {
         return a.eq(b);
     }
 
-    @inline @operator('!=')
+    @inline
+    @operator("!=")
     static notEq(a: ScaleString, b: ScaleString): bool {
         return a.notEq(b);
     }

@@ -15,7 +15,6 @@
 import { Byte } from "../Byte";
 
 describe("Byte", () => {
-
     it("should encode byte", () => {
         let v = new Byte(0xac);
         expect<u8[]>(v.toU8a()).toStrictEqual([0xac]);
@@ -29,8 +28,8 @@ describe("Byte", () => {
         const instance = new Byte();
         instance.populateFromBytes([1]);
         expect<Byte>(instance).toStrictEqual(new Byte(1));
-    })
-    itThrows('when provided empty byte array', () => {
+    });
+    itThrows("when provided empty byte array", () => {
         Byte.fromU8a([]);
     });
 });
