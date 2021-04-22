@@ -14,7 +14,6 @@
 
 import { u128 } from "as-bignum";
 import { UnwrappableCodec } from "../interfaces/UnwrappableCodec";
-import { ArrayUtils } from "../utils/Arrays";
 import { BIT_LENGTH } from "../utils/Bytes";
 
 /** Representation for a UInt128 value in the system. */

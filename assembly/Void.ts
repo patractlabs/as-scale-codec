@@ -4,8 +4,6 @@ import { Codec } from "./interfaces/Codec";
  * @description SCALE Codec support for `void`
  */
 export class Void implements Codec {
-    constructor() {}
-    
     @inline
     toU8a(): u8[] {
         return new Array<u8>(0);
