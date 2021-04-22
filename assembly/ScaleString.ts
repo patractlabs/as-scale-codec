@@ -43,7 +43,7 @@ export class ScaleString extends ByteArray {
         for (let i = 0; i < u8Input.length; i++) {
             this.values[i] = u8Input[i];
         }
-        return index + this.encodedLength() + index;
+        return index + this.encodedLength();
     }
 
     /**
