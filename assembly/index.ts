@@ -10,3 +10,5 @@ export * from "./ScaleString";
 export * from "./UInt";
 export * from "./utils/Bytes";
 export * from "./Void";
+export * from "./Option";
+export * from "./Result";
