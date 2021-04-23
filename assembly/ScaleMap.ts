@@ -33,7 +33,6 @@ export class ScaleMap<K extends Codec, V extends Codec>
         const values: V[] = this.values();
         const len: CompactInt = new CompactInt(keys.length);
         const result: Array<Array<u8>> = [len.toU8a()];
-
         for (let i = 0; i < keys.length; i++) {
             result.push(keys[i].toU8a());
             result.push(values[i].toU8a());
@@ -48,8 +47,8 @@ export class ScaleMap<K extends Codec, V extends Codec>
      */
     populateFromBytes(bytes: u8[], index: i32 = 0): i32 {
         const bytesReader = new BytesReader(bytes, index);
-        const lenComp = bytesReader.readInto<CompactInt>();
-        for (let i: i32 = 0; i < lenComp.unwrap(); i++) {
+        const len = bytesReader.readInto<CompactInt>().unwrap();
+        for (let i: i32 = 0; i < len; i++) {
             const key = bytesReader.readInto<K>();
             const value = bytesReader.readInto<V>();
             this.set(key, value);
@@ -57,22 +56,23 @@ export class ScaleMap<K extends Codec, V extends Codec>
 
         return bytesReader.currentIndex();
     }
+
     @operator("==")
     eq(other: ScaleMap<K, V>): bool {
         const aLen = this.size;
         const bLen = other.size;
-        const aKeys = this.keys();
-        const bKeys = other.keys();
-
         if (aLen != bLen) {
             return false;
         }
 
+        const aKeys = this.keys();
+        const bKeys = other.keys();
         for (let i = 0; i < aLen; i++) {
             if (aKeys[i] != bKeys[i]) {
                 return false;
             }
         }
+
         const aValues = this.values();
         const bValues = other.values();
         for (let i = 0; i < aLen; i++) {
@@ -95,7 +95,6 @@ export class ScaleMap<K extends Codec, V extends Codec>
         const map = new ScaleMap<K, V>();
         const bytesReader = new BytesReader(input, index);
         const len = bytesReader.readInto<CompactInt>().unwrap();
-
         for (let i: i32 = 0; i < len; i++) {
             const key = bytesReader.readInto<K>();
             const value = bytesReader.readInto<V>();
