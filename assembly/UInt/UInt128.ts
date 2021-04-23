@@ -14,11 +14,11 @@
 
 import { u128 } from "as-bignum";
 import { UnwrappableCodec } from "../interfaces/UnwrappableCodec";
-import { BIT_LENGTH } from "../utils/Bytes";
+import { BYTE_LENGTH } from "../utils/Bytes";
 
 /** Representation for a UInt128 value in the system. */
 export class UInt128 implements UnwrappableCodec<u128> {
-    private _value: u128;
+    protected _value: u128;
 
     constructor(value: u128 = u128.Zero) {
         this._value = value;
@@ -62,7 +62,7 @@ export class UInt128 implements UnwrappableCodec<u128> {
      */
     @inline
     public encodedLength(): i32 {
-        return BIT_LENGTH.INT_128;
+        return BYTE_LENGTH.INT_128;
     }
 
     /** Instantiates new UInt128 from u8[] SCALE encoded bytes */

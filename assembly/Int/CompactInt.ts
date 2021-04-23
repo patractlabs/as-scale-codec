@@ -13,7 +13,7 @@
 // limitations under the License.
 
 import { UnwrappableCodec } from "../interfaces/UnwrappableCodec";
-import { BIT_LENGTH, Bytes } from "../utils/Bytes";
+import { BYTE_LENGTH, Bytes } from "../utils/Bytes";
 import { BytesBuffer } from "../utils/BytesBuffer";
 
 /**
@@ -21,11 +21,11 @@ import { BytesBuffer } from "../utils/BytesBuffer";
  */
 export class CompactInt implements UnwrappableCodec<i64> {
     protected _value: i64;
-    protected bitLength: i32;
+    protected byteLength: i32;
 
     constructor(value: i64 = 0) {
         this._value = value;
-        this.bitLength = CompactInt._computeBitLength(value);
+        this.byteLength = CompactInt._computeByteLength(value);
     }
 
     /**
@@ -57,7 +57,7 @@ export class CompactInt implements UnwrappableCodec<i64> {
         );
         const decodedData = Bytes.decodeCompactInt(bytes, index);
         this._value = decodedData.value;
-        this.bitLength = CompactInt._computeBitLength(decodedData.value);
+        this.byteLength = CompactInt._computeByteLength(decodedData.value);
         return this.encodedLength() + index;
     }
     /**
@@ -72,12 +72,12 @@ export class CompactInt implements UnwrappableCodec<i64> {
      * Internal private function to compute bit length of the value
      * @param value
      */
-    static _computeBitLength(value: u64): i32 {
-        if (value < 1 << 6) return BIT_LENGTH.INT_8;
-        else if (value < 1 << 14) return BIT_LENGTH.INT_16;
-        else if (value < 1 << 30) return BIT_LENGTH.INT_32;
+    static _computeByteLength(value: u64): i32 {
+        if (value < 1 << 6) return BYTE_LENGTH.INT_8;
+        else if (value < 1 << 14) return BYTE_LENGTH.INT_16;
+        else if (value < 1 << 30) return BYTE_LENGTH.INT_32;
         else {
-            return BIT_LENGTH.INT_64;
+            return BYTE_LENGTH.INT_64;
         }
     }
     /**
@@ -85,7 +85,7 @@ export class CompactInt implements UnwrappableCodec<i64> {
      */
     @inline
     public encodedLength(): i32 {
-        return this.bitLength;
+        return this.byteLength;
     }
 
     @inline

@@ -13,13 +13,12 @@
 // limitations under the License.
 
 import { AbstractInt } from "../AbstractInt";
-import { BIT_LENGTH, Bytes } from "../utils/Bytes";
+import { BYTE_LENGTH, Bytes } from "../utils/Bytes";
 
 /** Representation for a UInt32 value in the system. */
 export class UInt32 extends AbstractInt<i32> {
-
-    constructor (value: u32 = 0) {
-        super(value, BIT_LENGTH.INT_32);
+    constructor(value: u32 = 0) {
+        super(value, BYTE_LENGTH.INT_32);
     }
 
     /**
@@ -27,18 +26,20 @@ export class UInt32 extends AbstractInt<i32> {
      * NOTE: if the length of the provided value is less than the byte length of the UInt32,
      * it is filled with 0 bytes
      */
-    static fromU8a (value: u8[], index: i32 = 0): UInt32 {
+    static fromU8a(value: u8[], index: i32 = 0): UInt32 {
         assert(value.length - index > 0, "UInt32: Invalid bytes provided");
-        var res = Bytes.toUint<u32>(value, BIT_LENGTH.INT_32, index);
+        var res = Bytes.toUint<u32>(value, BYTE_LENGTH.INT_32, index);
         return new UInt32(res);
     }
 
-    @inline @operator("==")
+    @inline
+    @operator("==")
     static eq(a: UInt32, b: UInt32): bool {
         return a.eq(b);
     }
 
-    @inline @operator("!=")
+    @inline
+    @operator("!=")
     static notEq(a: UInt32, b: UInt32): bool {
         return a.notEq(b);
     }

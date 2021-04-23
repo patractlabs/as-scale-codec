@@ -18,12 +18,12 @@ import { Bytes } from "./utils/Bytes";
 /** Representation for a Int value in the system. */
 export abstract class AbstractInt<T extends number>
 implements UnwrappableCodec<T> {
-    protected bitLength: i32;
+    protected byteLength: i32;
     protected _value: T;
 
-    constructor(value: T, bitLength: i32) {
+    constructor(value: T, byteLength: i32) {
         this._value = value;
-        this.bitLength = bitLength;
+        this.byteLength = byteLength;
     }
 
     /**
@@ -36,8 +36,8 @@ implements UnwrappableCodec<T> {
 
     /** Encodes the value as u8[] as per the SCALE codec specification */
     public toU8a(): u8[] {
-        let bytesEncoded = new Array<u8>(this.bitLength);
-        Bytes.putUint<T>(bytesEncoded, this.unwrap(), this.bitLength);
+        let bytesEncoded = new Array<u8>(this.byteLength);
+        Bytes.putUint<T>(bytesEncoded, this.unwrap(), this.byteLength);
         return bytesEncoded;
     }
 
@@ -58,7 +58,7 @@ implements UnwrappableCodec<T> {
      */
     public populateFromBytes(bytes: u8[], index: i32 = 0): i32 {
         assert(bytes.length - index > 0, "AbstractInt: Invalid bytes provided");
-        this._value = Bytes.toUint<T>(bytes, this.bitLength, index);
+        this._value = Bytes.toUint<T>(bytes, this.byteLength, index);
         return this.encodedLength() + index;
     }
 
@@ -74,6 +74,6 @@ implements UnwrappableCodec<T> {
      */
     @inline
     public encodedLength(): i32 {
-        return this.bitLength;
+        return this.byteLength;
     }
 }

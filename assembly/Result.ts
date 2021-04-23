@@ -7,9 +7,9 @@ import { Option } from "./Option";
  */
 export class Result<O extends Codec, E extends Codec> implements Codec {
     constructor(
-        private readonly _ok: O = instantiateZero<O>(),
-        private readonly _err: E = instantiateZero<E>(),
-        private _is_err: bool = false
+        protected readonly _ok: O = instantiateZero<O>(),
+        protected readonly _err: E = instantiateZero<E>(),
+        protected _is_err: bool = false
     ) {}
 
     @inline

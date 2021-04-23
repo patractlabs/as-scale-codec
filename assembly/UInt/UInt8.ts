@@ -13,13 +13,12 @@
 // limitations under the License.
 
 import { AbstractInt } from "../AbstractInt";
-import { BIT_LENGTH } from "../utils/Bytes";
+import { BYTE_LENGTH } from "../utils/Bytes";
 
 /** Representation for a UInt8 value in the system. */
 export class UInt8 extends AbstractInt<u8> {
-
-    constructor (value: u8 = 0) {
-        super(value, BIT_LENGTH.INT_8);
+    constructor(value: u8 = 0) {
+        super(value, BYTE_LENGTH.INT_8);
     }
 
     /**
@@ -27,17 +26,22 @@ export class UInt8 extends AbstractInt<u8> {
      * NOTE: if the length of the provided value is less than the byte length of the UInt8,
      * it is filled with 0 bytes
      */
-    static fromU8a (value: u8[], index: i32 = 0): UInt8 {
-        assert(value.length - index > 0, "Uint8: cannot decode invalid u8 encoded value");
+    static fromU8a(value: u8[], index: i32 = 0): UInt8 {
+        assert(
+            value.length - index > 0,
+            "Uint8: cannot decode invalid u8 encoded value"
+        );
         return new UInt8(value[index]);
     }
 
-    @inline @operator("==")
+    @inline
+    @operator("==")
     static eq(a: UInt8, b: UInt8): bool {
         return a.eq(b);
     }
 
-    @inline @operator("!=")
+    @inline
+    @operator("!=")
     static notEq(a: UInt8, b: UInt8): bool {
         return a.notEq(b);
     }
