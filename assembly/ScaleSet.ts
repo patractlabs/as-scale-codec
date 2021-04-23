@@ -4,7 +4,7 @@ import { Codec } from "./interfaces/Codec";
 import { UnwrappableCodec } from "./interfaces/UnwrappableCodec";
 
 /**
- * @description SCALE Codec support for native Map type
+ * @description SCALE Codec support for native Set type
  */
 export class ScaleSet<T extends Codec>
     extends Set<T>
@@ -19,14 +19,14 @@ export class ScaleSet<T extends Codec>
     }
 
     /**
-     * The number of bytes this Map has
+     * The number of bytes this Set has
      */
     @inline
     encodedLength(): i32 {
         return this.toU8a().length;
     }
     /**
-     * Convert ScaleMap to u8[]
+     * Convert it to u8[]
      * Length is encoded first, followed by all key and value encodings concatenated
      */
     toU8a(): u8[] {
@@ -54,11 +54,7 @@ export class ScaleSet<T extends Codec>
 
         return bytesReader.currentIndex();
     }
-    /**
-     * @description Overloaded == operator
-     * @param a instance of ExtrinsicData
-     * @param b Instance of ExtrinsicData
-     */
+
     @operator("==")
     eq(other: ScaleSet<T>): bool {
         const aLen = this.size;
@@ -77,11 +73,6 @@ export class ScaleSet<T extends Codec>
         return true;
     }
 
-    /**
-     * @description Overloaded != operator
-     * @param a instance of ExtrinsicData
-     * @param b Instance of ExtrinsicData
-     */
     @operator("!=")
     notEq(other: ScaleSet<T>): bool {
         return !this.eq(other);
