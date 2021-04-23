@@ -7,7 +7,7 @@ import { ScaleMap } from "../ScaleMap";
 import { ScaleString } from "../ScaleString";
 import { UInt128, UInt16, UInt32, UInt64 } from "../UInt";
 
-describe("String", () => {
+describe("ScaleMap", () => {
     it("should encode ScaleMap", () => {
         const scaleMap1 = new ScaleMap<ScaleString, ByteArray>();
         scaleMap1.set(
@@ -235,7 +235,15 @@ describe("String", () => {
         scaleMap1.set(new UInt16(4), new Bool(false));
         scaleMap1.set(new UInt16(10), new Bool(true));
         scaleMap1.set(new UInt16(11), new Bool(false));
-        expect<bool>(decodedMap1.eq(scaleMap1)).toStrictEqual(true);
+        expect(decodedMap1 == scaleMap1).toBe(true);
+        expect(decodedMap1.unwrap() == scaleMap1).toBe(true);
+        
+        // expect(decodedMap1.unwrap() instanceof ScaleMap).toBe(true);
+        // expect(decodedMap1 instanceof ScaleMap).toBe(true);
+        // expect(
+        //     (new Map<UInt16, UInt16>() as ScaleMap<UInt16, UInt16>) instanceof
+        //         ScaleMap
+        // ).toBe(true);
 
         const map2U8a: u8[] = [
             8,
