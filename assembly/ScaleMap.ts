@@ -57,11 +57,6 @@ export class ScaleMap<K extends Codec, V extends Codec>
 
         return bytesReader.currentIndex();
     }
-    /**
-     * @description Overloaded == operator
-     * @param a instance of ExtrinsicData
-     * @param b Instance of ExtrinsicData
-     */
     @operator("==")
     eq(other: ScaleMap<K, V>): bool {
         const aLen = this.size;
@@ -88,11 +83,6 @@ export class ScaleMap<K extends Codec, V extends Codec>
         return true;
     }
 
-    /**
-     * @description Overloaded != operator
-     * @param a instance of ExtrinsicData
-     * @param b Instance of ExtrinsicData
-     */
     @operator("!=")
     notEq(other: ScaleMap<K, V>): bool {
         return !this.eq(other);
