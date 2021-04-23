@@ -6,8 +6,8 @@ import { instantiateZero } from "./utils";
  */
 export class Option<T extends Codec> implements Codec {
     constructor(
-        private readonly val: T = instantiateZero<T>(),
-        private _isNone: bool = true
+        protected readonly val: T = instantiateZero<T>(),
+        protected _isNone: bool = true
     ) {}
 
     @inline

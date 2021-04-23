@@ -13,15 +13,15 @@
 // limitations under the License.
 
 import { UnwrappableCodec } from "./interfaces/UnwrappableCodec";
-import { BIT_LENGTH } from "./utils/Bytes";
+import { BYTE_LENGTH } from "./utils/Bytes";
 
 export class Byte implements UnwrappableCodec<u8> {
     protected _value: u8;
-    protected bitLength: i32;
+    protected byteLength: i32;
 
     constructor(value: u8 = 0) {
         this._value = value;
-        this.bitLength = BIT_LENGTH.INT_8;
+        this.byteLength = BYTE_LENGTH.INT_8;
     }
 
     /**
@@ -64,7 +64,7 @@ export class Byte implements UnwrappableCodec<u8> {
      * @description The length of Byte when the value is encoded
      */
     public encodedLength(): i32 {
-        return this.bitLength;
+        return this.byteLength;
     }
 
     /** Instantiates new Byte from u8[] SCALE encoded bytes */

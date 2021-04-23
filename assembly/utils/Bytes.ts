@@ -14,7 +14,7 @@
 
 import { DecodedData } from "./../interfaces/DecodedData";
 
-export const enum BIT_LENGTH {
+export const enum BYTE_LENGTH {
     INT_8 = 1,
     INT_16 = 2,
     INT_32 = 4,
@@ -24,29 +24,29 @@ export const enum BIT_LENGTH {
 
 export class Bytes {
 
-    static putUint<T extends number> (b: u8[], v: T, bitLength: number): void {
+    static putUint<T extends number> (b: u8[], v: T, byteLength: number): void {
         b[0] = u8(v);
 
-        for (let i: u8 = 1; i < bitLength; i++) {
+        for (let i: u8 = 1; i < byteLength; i++) {
             b[i] = u8(v >> i * 8);
         }
     }
 
-    static toUint<T extends number> (b: u8[], bitLength: i32, index: i32 = 0): T {
-        const buf = new Array<u8>(bitLength);
+    static toUint<T extends number> (b: u8[], byteLength: i32, index: i32 = 0): T {
+        const buf = new Array<u8>(byteLength);
         Bytes.copy<u8>(b, buf, 0, index);
 
         let result: T = <T>buf[0];
-        for (let i: i32 = 1; i < bitLength; i++) {
+        for (let i: i32 = 1; i < byteLength; i++) {
             result |= (buf[i] as T) << 8 * u8(i);
         }
 
         return result;
     }
 
-    static appendUint<T extends number> (b: Array<u8>, v: T, bitLength: number): void {
+    static appendUint<T extends number> (b: Array<u8>, v: T, byteLength: number): void {
         b.push(u8(v));
-        for (let i: u8 = 1; i < bitLength; i++) {
+        for (let i: u8 = 1; i < byteLength; i++) {
             b.push(u8(v >> i * 8));
         }
     }
@@ -82,7 +82,7 @@ export class Bytes {
         assert(input.length - index != 0, "Invalid input: Byte array should not be empty");
 
         const mode = input[index] & 3;
-        if (i32(mode) <= BIT_LENGTH.INT_16) {
+        if (i32(mode) <= BYTE_LENGTH.INT_16) {
             return Bytes.decodeSmallInt(input, mode, index);
         }
 
@@ -92,14 +92,14 @@ export class Bytes {
         const buf = new Array<u8>(byteLen);
         Bytes.copy<u8>(input, buf, 0, index);
 
-        if (i32(byteLen) == BIT_LENGTH.INT_32) {
-            return new DecodedData<u64>(u64(Bytes.toUint<u32>(buf, BIT_LENGTH.INT_32)), BIT_LENGTH.INT_32);
+        if (i32(byteLen) == BYTE_LENGTH.INT_32) {
+            return new DecodedData<u64>(u64(Bytes.toUint<u32>(buf, BYTE_LENGTH.INT_32)), BYTE_LENGTH.INT_32);
         }
 
-        if (i32(byteLen) > BIT_LENGTH.INT_32 && i32(byteLen) < BIT_LENGTH.INT_64) {
+        if (i32(byteLen) > BYTE_LENGTH.INT_32 && i32(byteLen) < BYTE_LENGTH.INT_64) {
             const tmp = new Array<u8>(8);
             Bytes.copy<u8>(buf, tmp);
-            return new DecodedData<u64>(Bytes.toUint<i64>(tmp, BIT_LENGTH.INT_64), BIT_LENGTH.INT_64);
+            return new DecodedData<u64>(Bytes.toUint<i64>(tmp, BYTE_LENGTH.INT_64), BYTE_LENGTH.INT_64);
         }
 
         throw new Error("CompactInt: Invalid encoding of compact int provided");
@@ -108,13 +108,13 @@ export class Bytes {
     static decodeSmallInt (input: u8[], mode: u8, index: i32 = 0): DecodedData<u64> {
         assert(mode == 0 || mode == 1 || mode == 2, "Small Int: mode is invalid");
         if (mode == 0) {
-            return new DecodedData<u64>(u64(Bytes.decodeByte(input[index])), BIT_LENGTH.INT_8);
+            return new DecodedData<u64>(u64(Bytes.decodeByte(input[index])), BYTE_LENGTH.INT_8);
         } else if (mode == 1) {
-            assert(i32(input.length - index) >= BIT_LENGTH.INT_16, "Invalid input: expected 2 bytes array");
-            return new DecodedData<u64>(u64(Bytes.decode2Bytes([input[index], input[index + 1]])), BIT_LENGTH.INT_16);
+            assert(i32(input.length - index) >= BYTE_LENGTH.INT_16, "Invalid input: expected 2 bytes array");
+            return new DecodedData<u64>(u64(Bytes.decode2Bytes([input[index], input[index + 1]])), BYTE_LENGTH.INT_16);
         } else {
-            assert(i32(input.length - index) >= BIT_LENGTH.INT_32, "Invalid input: expected 4 bytes array");
-            return new DecodedData<u64>(u64(Bytes.decode4Bytes([input[index], input[index + 1], input[index + 2], input[index + 3]])), BIT_LENGTH.INT_32);
+            assert(i32(input.length - index) >= BYTE_LENGTH.INT_32, "Invalid input: expected 4 bytes array");
+            return new DecodedData<u64>(u64(Bytes.decode4Bytes([input[index], input[index + 1], input[index + 2], input[index + 3]])), BYTE_LENGTH.INT_32);
         }
     }
 
@@ -123,11 +123,11 @@ export class Bytes {
     }
 
     static decode2Bytes (bytes: u8[]): i64 {
-        return i64(Bytes.toUint<u16>(bytes, BIT_LENGTH.INT_16) >> 2);
+        return i64(Bytes.toUint<u16>(bytes, BYTE_LENGTH.INT_16) >> 2);
     }
 
     static decode4Bytes (bytes: u8[]): i64 {
-        return i64(Bytes.toUint<u32>(bytes, BIT_LENGTH.INT_32) >> 2);
+        return i64(Bytes.toUint<u32>(bytes, BYTE_LENGTH.INT_32) >> 2);
     }
 
     /**

@@ -13,13 +13,12 @@
 // limitations under the License.
 
 import { AbstractInt } from "../AbstractInt";
-import { BIT_LENGTH, Bytes } from "../utils/Bytes";
+import { BYTE_LENGTH, Bytes } from "../utils/Bytes";
 
 /** Representation for a UInt64 value in the system. */
 export class UInt64 extends AbstractInt<u64> {
-
-    constructor (value: u64 = 0) {
-        super(value, BIT_LENGTH.INT_64);
+    constructor(value: u64 = 0) {
+        super(value, BYTE_LENGTH.INT_64);
     }
 
     /**
@@ -27,18 +26,20 @@ export class UInt64 extends AbstractInt<u64> {
      * NOTE: if the length of the provided value is less than the byte length of the UInt64,
      * it is filled with 0 bytes
      */
-    static fromU8a (value: u8[], index: i32 = 0): UInt64 {
+    static fromU8a(value: u8[], index: i32 = 0): UInt64 {
         assert(value.length - index > 0, "UInt64: invalid bytes provided");
-        var res = Bytes.toUint<u64>(value, BIT_LENGTH.INT_64, index);
+        var res = Bytes.toUint<u64>(value, BYTE_LENGTH.INT_64, index);
         return new UInt64(res);
     }
 
-    @inline @operator("==")
+    @inline
+    @operator("==")
     static eq(a: UInt64, b: UInt64): bool {
         return a.eq(b);
     }
 
-    @inline @operator("!=")
+    @inline
+    @operator("!=")
     static notEq(a: UInt64, b: UInt64): bool {
         return a.notEq(b);
     }
