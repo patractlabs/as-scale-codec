@@ -63,16 +63,4 @@ export class IntArray extends AbstractArray<CompactInt, i64> {
     static fromU8a(input: u8[]): IntArray {
         return AbstractArray.fromU8a<IntArray>(input);
     }
-
-    @inline
-    @operator("==")
-    static eq(a: IntArray, b: IntArray): bool {
-        return a.eq(b);
-    }
-
-    @inline
-    @operator("!=")
-    static notEq(a: IntArray, b: IntArray): bool {
-        return a.notEq(b);
-    }
 }

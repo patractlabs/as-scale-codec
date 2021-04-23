@@ -68,16 +68,4 @@ export class UInt128Array extends AbstractArray<UInt128, u128> {
             super.values.length * BYTE_LENGTH.INT_128
         );
     }
-
-    @inline
-    @operator("==")
-    static eq(a: UInt128Array, b: UInt128Array): bool {
-        return a.eq(b);
-    }
-
-    @inline
-    @operator("!=")
-    static notEq(a: UInt128Array, b: UInt128Array): bool {
-        return a.notEq(b);
-    }
 }

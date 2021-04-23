@@ -63,11 +63,13 @@ export class Bool implements UnwrappableCodec<bool> {
     }
 
     @inline
+    @operator("==")
     eq(other: Bool): bool {
         return this._value == other.unwrap();
     }
 
     @inline
+    @operator("!=")
     notEq(other: Bool): bool {
         return this._value != other.unwrap();
     }
@@ -87,17 +89,5 @@ export class Bool implements UnwrappableCodec<bool> {
         );
 
         return new Bool(value[index] == 1);
-    }
-
-    @inline
-    @operator("==")
-    static eq(a: Bool, b: Bool): bool {
-        return a.eq(b);
-    }
-
-    @inline
-    @operator("!=")
-    static notEq(a: Bool, b: Bool): bool {
-        return a.notEq(b);
     }
 }

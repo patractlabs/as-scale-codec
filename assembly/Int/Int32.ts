@@ -17,6 +17,7 @@ import { BYTE_LENGTH, Bytes } from "../utils/Bytes";
 
 /** Representation for a Int32 value in the system. */
 export class Int32 extends AbstractInt<i32> {
+    @inline
     constructor(value: i32 = 0) {
         super(value, BYTE_LENGTH.INT_32);
     }
@@ -30,17 +31,5 @@ export class Int32 extends AbstractInt<i32> {
         assert(value.length - index > 0, "Int32: Empty bytes array provided");
         var res = Bytes.toUint<u32>(value, BYTE_LENGTH.INT_32, index);
         return new Int32(res);
-    }
-
-    @inline
-    @operator("==")
-    static eq(a: Int32, b: Int32): bool {
-        return a.eq(b);
-    }
-
-    @inline
-    @operator("!=")
-    static notEq(a: Int32, b: Int32): bool {
-        return a.notEq(b);
     }
 }

@@ -23,6 +23,7 @@ export class CompactInt implements UnwrappableCodec<i64> {
     protected _value: i64;
     protected byteLength: i32;
 
+    @inline
     constructor(value: i64 = 0) {
         this._value = value;
         this.byteLength = CompactInt._computeByteLength(value);
@@ -89,11 +90,13 @@ export class CompactInt implements UnwrappableCodec<i64> {
     }
 
     @inline
+    @operator("==")
     eq(other: CompactInt): bool {
         return this._value == other.unwrap();
     }
 
     @inline
+    @operator("!=")
     notEq(other: CompactInt): bool {
         return this._value != other.unwrap();
     }
@@ -111,17 +114,5 @@ export class CompactInt implements UnwrappableCodec<i64> {
         );
         const decodedData = Bytes.decodeCompactInt(value, index);
         return new CompactInt(decodedData.value);
-    }
-
-    @inline
-    @operator("==")
-    static eq(a: CompactInt, b: CompactInt): bool {
-        return a.eq(b);
-    }
-
-    @inline
-    @operator("!=")
-    static notEq(a: CompactInt, b: CompactInt): bool {
-        return a.notEq(b);
     }
 }

@@ -92,6 +92,7 @@ export class Hash implements UnwrappableCodec<Array<u8>> {
         return new Hash(input.slice(index));
     }
 
+    @operator("==")
     eq(other: Hash): bool {
         let areEqual = true;
         for (let i = 0; i < this.unwrap().length; i++) {
@@ -104,19 +105,8 @@ export class Hash implements UnwrappableCodec<Array<u8>> {
     }
 
     @inline
+    @operator("!=")
     notEq(other: Hash): bool {
         return !this.eq(other);
-    }
-
-    @inline
-    @operator("==")
-    static eq(a: Hash, b: Hash): bool {
-        return a.eq(b);
-    }
-
-    @inline
-    @operator("!=")
-    static notEq(a: Hash, b: Hash): bool {
-        return a.notEq(b);
     }
 }

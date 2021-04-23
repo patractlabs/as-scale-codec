@@ -69,16 +69,4 @@ export class StringArray extends AbstractArray<ScaleString, string> {
     static fromU8a(input: u8[]): StringArray {
         return AbstractArray.fromU8a<StringArray>(input);
     }
-
-    @inline
-    @operator("==")
-    static eq(a: StringArray, b: StringArray): bool {
-        return a.eq(b);
-    }
-
-    @inline
-    @operator("!=")
-    static notEq(a: StringArray, b: StringArray): bool {
-        return a.notEq(b);
-    }
 }

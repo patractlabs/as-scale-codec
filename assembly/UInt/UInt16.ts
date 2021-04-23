@@ -31,16 +31,4 @@ export class UInt16 extends AbstractInt<u16> {
         var res = Bytes.toUint<u16>(value, BYTE_LENGTH.INT_16, index);
         return new UInt16(res);
     }
-
-    @inline
-    @operator("==")
-    static eq(a: UInt16, b: UInt16): bool {
-        return a.eq(b);
-    }
-
-    @inline
-    @operator("!=")
-    static notEq(a: UInt16, b: UInt16): bool {
-        return a.notEq(b);
-    }
 }

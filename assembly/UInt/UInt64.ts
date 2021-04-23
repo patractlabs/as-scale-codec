@@ -31,16 +31,4 @@ export class UInt64 extends AbstractInt<u64> {
         var res = Bytes.toUint<u64>(value, BYTE_LENGTH.INT_64, index);
         return new UInt64(res);
     }
-
-    @inline
-    @operator("==")
-    static eq(a: UInt64, b: UInt64): bool {
-        return a.eq(b);
-    }
-
-    @inline
-    @operator("!=")
-    static notEq(a: UInt64, b: UInt64): bool {
-        return a.notEq(b);
-    }
 }

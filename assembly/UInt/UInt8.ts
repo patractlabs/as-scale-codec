@@ -33,16 +33,4 @@ export class UInt8 extends AbstractInt<u8> {
         );
         return new UInt8(value[index]);
     }
-
-    @inline
-    @operator("==")
-    static eq(a: UInt8, b: UInt8): bool {
-        return a.eq(b);
-    }
-
-    @inline
-    @operator("!=")
-    static notEq(a: UInt8, b: UInt8): bool {
-        return a.notEq(b);
-    }
 }

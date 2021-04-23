@@ -51,11 +51,13 @@ export class Byte implements UnwrappableCodec<u8> {
     }
 
     @inline
+    @operator("==")
     eq(other: Byte): bool {
         return this._value == other.unwrap();
     }
 
     @inline
+    @operator("!=")
     notEq(other: Byte): bool {
         return this._value != other.unwrap();
     }
@@ -71,17 +73,5 @@ export class Byte implements UnwrappableCodec<u8> {
     static fromU8a(value: u8[], index: i32 = 0): Byte {
         assert(value.length - index > 0, "Byte: cannot decode invalid type");
         return new Byte(value[index]);
-    }
-
-    @inline
-    @operator("==")
-    static eq(a: Byte, b: Byte): bool {
-        return a.eq(b);
-    }
-
-    @inline
-    @operator("!=")
-    static notEq(a: Byte, b: Byte): bool {
-        return a.notEq(b);
     }
 }

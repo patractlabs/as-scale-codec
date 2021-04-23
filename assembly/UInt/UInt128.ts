@@ -98,16 +98,4 @@ export class UInt128 implements UnwrappableCodec<u128> {
     @inline static get Max(): UInt128 {
         return new UInt128(new u128(-1, -1));
     }
-
-    @inline
-    @operator("==")
-    static eq(a: UInt128, b: UInt128): bool {
-        return a.eq(b);
-    }
-
-    @inline
-    @operator("!=")
-    static notEq(a: UInt128, b: UInt128): bool {
-        return a.notEq(b);
-    }
 }

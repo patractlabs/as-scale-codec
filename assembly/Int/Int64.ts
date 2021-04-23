@@ -17,6 +17,7 @@ import { BYTE_LENGTH, Bytes } from "../utils/Bytes";
 
 /** Representation for a Int64 value in the system. */
 export class Int64 extends AbstractInt<i64> {
+    @inline
     constructor(value: i64 = 0) {
         super(value, BYTE_LENGTH.INT_64);
     }
@@ -30,17 +31,5 @@ export class Int64 extends AbstractInt<i64> {
         assert(value.length - index > 0, "Int64: Empty bytes array provided");
         var res = Bytes.toUint<u64>(value, BYTE_LENGTH.INT_64, index);
         return new Int64(res);
-    }
-
-    @inline
-    @operator("==")
-    static eq(a: Int64, b: Int64): bool {
-        return a.eq(b);
-    }
-
-    @inline
-    @operator("!=")
-    static notEq(a: Int64, b: Int64): bool {
-        return a.notEq(b);
     }
 }

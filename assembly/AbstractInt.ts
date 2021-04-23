@@ -17,7 +17,7 @@ import { Bytes } from "./utils/Bytes";
 
 /** Representation for a Int value in the system. */
 export abstract class AbstractInt<T extends number>
-implements UnwrappableCodec<T> {
+    implements UnwrappableCodec<T> {
     protected byteLength: i32;
     protected _value: T;
 
@@ -30,25 +30,15 @@ implements UnwrappableCodec<T> {
      * @description Returns the inner native value
      */
     @inline
-    public unwrap(): T {
+    unwrap(): T {
         return this._value;
     }
 
     /** Encodes the value as u8[] as per the SCALE codec specification */
-    public toU8a(): u8[] {
+    toU8a(): u8[] {
         let bytesEncoded = new Array<u8>(this.byteLength);
         Bytes.putUint<T>(bytesEncoded, this.unwrap(), this.byteLength);
         return bytesEncoded;
-    }
-
-    @inline
-    public eq(other: AbstractInt<T>): bool {
-        return this.unwrap() == other.unwrap();
-    }
-
-    @inline
-    public notEq(other: AbstractInt<T>): bool {
-        return this.unwrap() != other.unwrap();
     }
 
     /**
@@ -56,7 +46,7 @@ implements UnwrappableCodec<T> {
      * @param bytes SCALE encoded bytes
      * @param index index to start decoding the bytes from
      */
-    public populateFromBytes(bytes: u8[], index: i32 = 0): i32 {
+    populateFromBytes(bytes: u8[], index: i32 = 0): i32 {
         assert(bytes.length - index > 0, "AbstractInt: Invalid bytes provided");
         this._value = Bytes.toUint<T>(bytes, this.byteLength, index);
         return this.encodedLength() + index;
@@ -73,7 +63,19 @@ implements UnwrappableCodec<T> {
      * @description The length of Uint8Array when the value is encoded
      */
     @inline
-    public encodedLength(): i32 {
+    encodedLength(): i32 {
         return this.byteLength;
+    }
+
+    @inline
+    @operator("==")
+    eq(other: AbstractInt<T>): bool {
+        return this.unwrap() == other.unwrap();
+    }
+
+    @inline
+    @operator("!=")
+    notEq(other: AbstractInt<T>): bool {
+        return this.unwrap() != other.unwrap();
     }
 }

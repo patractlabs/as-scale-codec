@@ -79,16 +79,4 @@ export class ByteArray extends AbstractArray<Byte, u8> {
     static fromU8a(input: u8[], index: i32 = 0): ByteArray {
         return AbstractArray.fromU8a<ByteArray>(input.slice(index));
     }
-
-    @inline
-    @operator("==")
-    static eq(a: ByteArray, b: ByteArray): bool {
-        return a.eq(b);
-    }
-
-    @inline
-    @operator("!=")
-    static notEq(a: ByteArray, b: ByteArray): bool {
-        return a.notEq(b);
-    }
 }

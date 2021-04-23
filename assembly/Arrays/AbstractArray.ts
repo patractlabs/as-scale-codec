@@ -35,11 +35,15 @@ implements UnwrappableCodec<Array<NativeType>> {
         return this.values;
     }
 
-    public eq(other: AbstractArray<ScaleType, NativeType>): bool {
+    @inline
+    @operator("==")
+    public eq(other: this): bool {
         return ArrayUtils.areArraysEqual(this.values, other.values);
     }
 
-    public notEq(other: AbstractArray<ScaleType, NativeType>): bool {
+    @inline
+    @operator("!=")
+    public notEq(other: this): bool {
         return !ArrayUtils.areArraysEqual(this.values, other.values);
     }
 
