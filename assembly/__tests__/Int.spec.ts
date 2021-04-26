@@ -56,8 +56,12 @@ describe("Int8", () => {
     });
     it("should decode using populate method", () => {
         const int8 = new Int8();
+        const one = new Int8(1);
         int8.populateFromBytes([0x7f]);
         expect<Int8>(int8).toStrictEqual(new Int8(127));
+        expect((int8 - one).unwrap()).toBe(126);
+        expect((int8 + one).unwrap()).toBe(-128);
+        expect((int8 + one + one).unwrap()).toBe(-127);
         int8.populateFromBytes([0xff]);
         expect<Int8>(int8).toStrictEqual(new Int8(-1));
         int8.populateFromBytes([0xf1]);

@@ -16,9 +16,8 @@ import { AbstractInt } from "../AbstractInt";
 import { BYTE_LENGTH, Bytes } from "../utils/Bytes";
 
 /** Representation for a Int16 value in the system. */
-export class Int16 extends AbstractInt<i16>  {
-
-    constructor (value: i16 = 0) {
+export class Int16 extends AbstractInt<i16> {
+    constructor(value: i16 = 0) {
         super(value, BYTE_LENGTH.INT_16);
     }
 
@@ -27,18 +26,20 @@ export class Int16 extends AbstractInt<i16>  {
      * NOTE: if the length of the provided value is less than the byte length of the Int16,
      * it is filled with 0 bytes
      * */
-    static fromU8a (value: u8[], index:i32 = 0): Int16 {
+    static fromU8a(value: u8[], index: i32 = 0): Int16 {
         assert(value.length - index > 0, "Int16: Empty bytes array provided");
         var res = Bytes.toUint<u16>(value, BYTE_LENGTH.INT_16, index);
         return new Int16(res);
     }
 
-    @inline @operator("==")
+    @inline
+    @operator("==")
     static eq(a: Int16, b: Int16): bool {
         return a.eq(b);
     }
 
-    @inline @operator("!=")
+    @inline
+    @operator("!=")
     static notEq(a: Int16, b: Int16): bool {
         return a.notEq(b);
     }

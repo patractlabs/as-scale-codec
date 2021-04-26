@@ -17,8 +17,7 @@ import { BYTE_LENGTH } from "../utils/Bytes";
 
 /** Representation for a Int8 value in the system. */
 export class Int8 extends AbstractInt<i8> {
-
-    constructor (value: i8 = 0) {
+    constructor(value: i8 = 0) {
         super(value, BYTE_LENGTH.INT_8);
     }
 
@@ -27,17 +26,19 @@ export class Int8 extends AbstractInt<i8> {
      * NOTE: if the length of the provided value is less than the byte length of the Int8,
      * it is filled with 0 bytes
      * */
-    static fromU8a (value: u8[], index: i32 = 0): Int8 {
+    static fromU8a(value: u8[], index: i32 = 0): Int8 {
         assert(value.length - index > 0, "Int8: empty bytes array provided");
         return new Int8(value[index]);
     }
 
-    @inline @operator("==")
+    @inline
+    @operator("==")
     static eq(a: Int8, b: Int8): bool {
         return a.eq(b);
     }
 
-    @inline @operator("!=")
+    @inline
+    @operator("!=")
     static notEq(a: Int8, b: Int8): bool {
         return a.notEq(b);
     }
