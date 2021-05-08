@@ -62,14 +62,14 @@ export class ScaleArray<T extends Codec>
 
     @inline
     @operator("==")
-    eq(other: ScaleArray<T>): bool {
-        return ArrayUtils.areArraysEqual(this, other);
+    eq(other: this): bool {
+        return this === other;
     }
 
     @inline
     @operator("!=")
-    notEq(other: ScaleArray<T>): bool {
-        return !ArrayUtils.areArraysEqual(this, other);
+    notEq(other: this): bool {
+        return !this.eq(other);
     }
 
     /**
@@ -79,5 +79,15 @@ export class ScaleArray<T extends Codec>
         const scaleArray = instantiate<ScaleArray<T>>([]);
         scaleArray.populateFromBytes(input, 0);
         return scaleArray;
+    }
+
+    @inline
+    static eq<T extends Codec>(a: ScaleArray<T>, b: ScaleArray<T>): bool {
+        return ArrayUtils.areArraysEqual<T>(a, b);
+    }
+
+    @inline
+    static notEq<T extends Codec>(a: ScaleArray<T>, b: ScaleArray<T>): bool {
+        return !ScaleArray.notEq<T>(a, b);
     }
 }
