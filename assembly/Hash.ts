@@ -27,14 +27,14 @@ export class Hash implements UnwrappableCodec<Array<u8>> {
      * @description Returns the inner native value
      */
     @inline
-    public unwrap(): Array<u8> {
+    unwrap(): Array<u8> {
         return this._values;
     }
 
     /**
      * @description  Encodes Hash as u8[] as per the SCALE codec specification
      */
-    public toU8a(): u8[] {
+    toU8a(): u8[] {
         const result: u8[] = new Array<u8>(this.encodedLength());
         Bytes.copy<u8>(this._values, result);
 
@@ -46,7 +46,7 @@ export class Hash implements UnwrappableCodec<Array<u8>> {
      * @param bytes SCALE encoded bytes
      * @param index index to start decoding the bytes from
      */
-    public populateFromBytes(bytes: u8[], index: i32 = 0): i32 {
+    populateFromBytes(bytes: u8[], index: i32 = 0): i32 {
         assert(bytes.length - index >= 0, "Hash: Empty bytes array provided");
         this._values = new Array<u8>(32);
         Bytes.copy(bytes, this._values, 0, index);
@@ -56,8 +56,19 @@ export class Hash implements UnwrappableCodec<Array<u8>> {
     /**
      * @description  Return string representation of Hash
      */
-    public toString(): string {
-        return "0x" + this._values.join("");
+    toString(): string {
+        return (
+            "0x" +
+            this._values
+                .map<string>((v) => {
+                    let res = v.toString(16);
+                    if (res.length == 1) {
+                        res = "0" + res;
+                    }
+                    return res;
+                })
+                .join("")
+        );
     }
 
     /**
@@ -78,7 +89,7 @@ export class Hash implements UnwrappableCodec<Array<u8>> {
      * @description The length of encoded Hash
      */
     @inline
-    public encodedLength(): i32 {
+    encodedLength(): i32 {
         return 32;
     }
 
@@ -92,31 +103,19 @@ export class Hash implements UnwrappableCodec<Array<u8>> {
         return new Hash(input.slice(index));
     }
 
-    eq(other: Hash): bool {
-        let areEqual = true;
+    @operator("==")
+    eq(other: this): bool {
         for (let i = 0; i < this.unwrap().length; i++) {
-            if (this.unwrap()[i] != other.unwrap()[i]) {
-                areEqual = false;
-                break;
+            if (this._values[i] != other._values[i]) {
+                return false;
             }
         }
-        return areEqual;
-    }
-
-    @inline
-    notEq(other: Hash): bool {
-        return !this.eq(other);
-    }
-
-    @inline
-    @operator("==")
-    static eq(a: Hash, b: Hash): bool {
-        return a.eq(b);
+        return true;
     }
 
     @inline
     @operator("!=")
-    static notEq(a: Hash, b: Hash): bool {
-        return a.notEq(b);
+    notEq(other: this): bool {
+        return !this.eq(other);
     }
 }
