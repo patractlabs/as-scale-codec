@@ -56,26 +56,13 @@ export class ScaleSet<T extends Codec>
     }
 
     @operator("==")
-    eq(other: ScaleSet<T>): bool {
-        const aLen = this.size;
-        const bLen = other.size;
-        const aValues = this.values();
-        const bValues = other.values();
-
-        if (aLen != bLen) {
-            return false;
-        }
-        for (let i = 0; i < aValues.length; i++) {
-            if (aValues[i] != bValues[i]) {
-                return false;
-            }
-        }
-        return true;
+    eq(other: this): bool {
+        return this === other;
     }
 
     @operator("!=")
-    notEq(other: ScaleSet<T>): bool {
-        return !this.eq(other);
+    notEq(other: this): bool {
+        return !this.eq(this);
     }
 
     static fromU8a<T extends Codec>(input: u8[], index: i32 = 0): ScaleSet<T> {
