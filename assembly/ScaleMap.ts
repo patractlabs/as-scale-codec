@@ -58,33 +58,12 @@ export class ScaleMap<K extends Codec, V extends Codec>
     }
 
     @operator("==")
-    eq(other: ScaleMap<K, V>): bool {
-        const aLen = this.size;
-        const bLen = other.size;
-        if (aLen != bLen) {
-            return false;
-        }
-
-        const aKeys = this.keys();
-        const bKeys = other.keys();
-        for (let i = 0; i < aLen; i++) {
-            if (aKeys[i] != bKeys[i]) {
-                return false;
-            }
-        }
-
-        const aValues = this.values();
-        const bValues = other.values();
-        for (let i = 0; i < aLen; i++) {
-            if (aValues[i] != bValues[i]) {
-                return false;
-            }
-        }
-        return true;
+    eq(other: this): bool {
+        return this === other;
     }
 
     @operator("!=")
-    notEq(other: ScaleMap<K, V>): bool {
+    notEq(other: this): bool {
         return !this.eq(other);
     }
 
