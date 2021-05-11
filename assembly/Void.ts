@@ -20,24 +20,14 @@ export class Void implements Codec {
     }
 
     @inline
+    @operator("==")
     eq(other: Void): bool {
         return true;
     }
 
     @inline
-    notEq(other: Void): bool {
-        return false;
-    }
-
-    @inline
-    @operator("==")
-    static eq(a: Void, b: Void): bool {
-        return true;
-    }
-
-    @inline
     @operator("!=")
-    static notEq(a: Void, b: Void): bool {
+    notEq(other: Void): bool {
         return false;
     }
 }
