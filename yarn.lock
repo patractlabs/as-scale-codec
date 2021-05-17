@@ -7,7 +7,7 @@
   resolved "https://registry.yarnpkg.com/@as-pect/assembly/-/assembly-6.1.0.tgz#17a9a872a8cc3a003e449d2bc29566b7d4d1bc82"
   integrity sha512-N8bxUjIOfT6rK1HEA6tpe8Mb9pR2lG4QzgkD8PwS9gzsnE9XoQyGN8MDI5VH9tmgQZlmNUZRXkbn7JnExWSzqQ==
 
-"@as-pect/cli@6.1.1":
+"@as-pect/cli@^6.1.1":
   version "6.1.1"
   resolved "https://registry.yarnpkg.com/@as-pect/cli/-/cli-6.1.1.tgz#35c57b3afde3e961d6891f0b9bb223206243c148"
   integrity sha512-DXn+0Iktrfu11h4Z8sVuagEmCrO2uMhC0ovND3L2G+mF0ruC/Nh2tKzFBzkMqPai5HB6GfLQ0leKY9KwDn9pSA==
@@ -20,17 +20,7 @@
     "@as-pect/csv-reporter" "^6.1.1"
     "@as-pect/json-reporter" "^6.1.1"
 
-"@as-pect/core@6.1.0":
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/@as-pect/core/-/core-6.1.0.tgz#8892faf9416325cd89f869da05eebb00d2ee3f58"
-  integrity sha512-1n0TCY6hO4xaMh93MSV2sndk6KM2mihcsJdR0vig5AlRodDyTqJDWewNDXtzmecLyHKzSB5Jp2Bb5kmQmo8VPw==
-  dependencies:
-    "@as-pect/assembly" "^6.1.0"
-    "@as-pect/snapshots" "^6.1.0"
-    chalk "^4.1.0"
-    long "^4.0.0"
-
-"@as-pect/core@^6.1.1":
+"@as-pect/core@6.1.1", "@as-pect/core@^6.1.1":
   version "6.1.1"
   resolved "https://registry.yarnpkg.com/@as-pect/core/-/core-6.1.1.tgz#4b52b78df8084829d5f6ef08291b5855beec4fb2"
   integrity sha512-hjP2JLIK87sS3zz6RaIeFG12lq6itA/RgYTMoG2KqhoVWiE+WOm6vXy9LUJRoeDUiS8pq+MHpr4ERUkNFxMNqg==
