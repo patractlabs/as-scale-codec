@@ -16,7 +16,7 @@ export class Void implements Codec {
 
     @inline
     populateFromBytes(bytes: u8[], index: i32 = 0): i32 {
-        return 0;
+        return index;
     }
 
     @inline
