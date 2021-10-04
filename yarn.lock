@@ -334,9 +334,9 @@ as-bignum@0.2.18:
   integrity sha512-5LODrOr7wvS643oh7PHfyRtbBO9vCcU69vNNvrqh5yovrApM9nRHDeT5XcqnaSI8TqK9ZhN12qhZnq4rdIGcwQ==
 
 assemblyscript@0.19:
-  version "0.19.14"
-  resolved "https://registry.yarnpkg.com/assemblyscript/-/assemblyscript-0.19.14.tgz#f2ed1bc7502db3f8c15aba346f752ef606aa2fdd"
-  integrity sha512-rycgWm6iq/W35DCNsmfQjgmJCO84vHP9s6a9U/lCvG21HXaTm/0IIp3IQUJSp2vQAovx1OotB0Vncdok8D2hLQ==
+  version "0.19.17"
+  resolved "https://registry.yarnpkg.com/assemblyscript/-/assemblyscript-0.19.17.tgz#b1dc9842a024a65eaf1f9943b3094e7c98b9f055"
+  integrity sha512-KY80XCUFaocBR9V+Xx9oaG2ftkO1Da13MDcF6ZB25Nlir8SHPQBzR7nqCqmVHxp5FoE3pAnxJMNmQmS3JiTUTA==
   dependencies:
     binaryen "101.0.0-nightly.20210904"
     long "^4.0.0"
