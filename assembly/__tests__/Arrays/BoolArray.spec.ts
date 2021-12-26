@@ -1,6 +1,6 @@
 import { BoolArray } from "../../Arrays/BoolArray";
 
-describe("Bool Array", () => {
+describe("BoolArray", () => {
     it("should encode bool array", () => {
         const boolArray: BoolArray = new BoolArray([true, false, true]);
         expect<Array<u8>>(boolArray.toU8a()).toStrictEqual([

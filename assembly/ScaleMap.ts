@@ -1,4 +1,4 @@
-import { CompactInt } from ".";
+import { CompactInt } from "./Int/CompactInt";
 import { BytesReader } from "./BytesReader";
 import { Codec } from "./interfaces/Codec";
 import { UnwrappableCodec } from "./interfaces/UnwrappableCodec";
@@ -7,70 +7,16 @@ import { UnwrappableCodec } from "./interfaces/UnwrappableCodec";
  * @description SCALE Codec support for native Map type
  */
 export class ScaleMap<K extends Codec, V extends Codec>
-implements UnwrappableCodec<Map<K, V>> {
-    /**
-     * Map value of ScaleMap
-     */
-    public readonly data: Map<K, V>;
-
-    constructor(data: Map<K, V> = new Map()) {
-        this.data = data;
-    }
-
+    extends Map<K, V>
+    implements UnwrappableCodec<Map<K, V>> {
     /**
      * @description return underlying native type
      */
     @inline
     unwrap(): Map<K, V> {
-        return this.data;
+        return this;
     }
-    /**
-     * Check if ScaleMap has given key
-     * @param key
-     */
-    @inline
-    has(key: K): bool {
-        return this.data.has(key);
-    }
-    /**
-     * Get the value of given key
-     * @param key
-     */
-    @inline
-    get(key: K): V {
-        return this.data.get(key);
-    }
-    /**
-     * Set this value to the given key
-     * @param key
-     * @param value
-     */
-    @inline
-    set(key: K, value: V): void {
-        this.data.set(key, value);
-    }
-    /**
-     * Delete the given key with its value from the ScaleMap
-     * @param key
-     */
-    @inline
-    delete(key: K): void {
-        this.data.delete(key);
-    }
-    /**
-     * Get array of keys of the ScaleMap
-     */
-    @inline
-    keys(): K[] {
-        return this.data.keys();
-    }
-    /**
-     * Get array of values of the ScaleMap
-     */
-    @inline
-    values(): V[] {
-        return this.data.values();
-    }
+
     /**
      * The number of bytes this Map has
      */
@@ -83,17 +29,15 @@ implements UnwrappableCodec<Map<K, V>> {
      * Length is encoded first, followed by all key and value encodings concatenated
      */
     toU8a(): u8[] {
-        // TODO: optimize
-        let result: u8[] = [];
-        let keys: K[] = this.data.keys();
-        let lenData: CompactInt = new CompactInt(keys.length);
-        result = result.concat(lenData.toU8a());
+        const keys: K[] = this.keys();
+        const values: V[] = this.values();
+        const len: CompactInt = new CompactInt(keys.length);
+        const result: Array<Array<u8>> = [len.toU8a()];
         for (let i = 0; i < keys.length; i++) {
-            result = result
-                .concat(keys[i].toU8a())
-                .concat(this.data.get(keys[i]).toU8a());
+            result.push(keys[i].toU8a());
+            result.push(values[i].toU8a());
         }
-        return result;
+        return result.flat();
     }
 
     /**
@@ -103,43 +47,23 @@ implements UnwrappableCodec<Map<K, V>> {
      */
     populateFromBytes(bytes: u8[], index: i32 = 0): i32 {
         const bytesReader = new BytesReader(bytes, index);
-        const lenComp = bytesReader.readInto<CompactInt>();
-        for (let i: i32 = 0; i < lenComp.unwrap(); i++) {
+        const len = bytesReader.readInto<CompactInt>().unwrap();
+        for (let i: i32 = 0; i < len; i++) {
             const key = bytesReader.readInto<K>();
             const value = bytesReader.readInto<V>();
-            this.data.set(key, value);
+            this.set(key, value);
         }
 
         return bytesReader.currentIndex();
     }
-    /**
-     * @description Overloaded == operator
-     * @param a instance of ExtrinsicData
-     * @param b Instance of ExtrinsicData
-     */
-    eq(other: ScaleMap<K, V>): bool {
-        let areEqual = true;
-        const aKeys = this.data.keys();
-        const bKeys = other.data.keys();
 
-        if (aKeys.length != bKeys.length) {
-            return false;
-        }
-        for (let i = 0; i < aKeys.length; i++) {
-            if (aKeys[i] != bKeys[i]) {
-                areEqual = false;
-                break;
-            }
-        }
-        return areEqual;
+    @operator("==")
+    eq(other: this): bool {
+        return this === other;
     }
 
-    /**
-     * @description Overloaded != operator
-     * @param a instance of ExtrinsicData
-     * @param b Instance of ExtrinsicData
-     */
-    notEq(other: ScaleMap<K, V>): bool {
+    @operator("!=")
+    notEq(other: this): bool {
         return !this.eq(other);
     }
 
@@ -147,15 +71,14 @@ implements UnwrappableCodec<Map<K, V>> {
         input: u8[],
         index: i32 = 0
     ): ScaleMap<K, V> {
-        const data = new Map<K, V>();
-        const bytesReader = new BytesReader(input);
-        const lenComp = bytesReader.readInto<CompactInt>();
-
-        for (let i: i32 = 0; i < lenComp.unwrap(); i++) {
+        const map = new ScaleMap<K, V>();
+        const bytesReader = new BytesReader(input, index);
+        const len = bytesReader.readInto<CompactInt>().unwrap();
+        for (let i: i32 = 0; i < len; i++) {
             const key = bytesReader.readInto<K>();
             const value = bytesReader.readInto<V>();
-            data.set(key, value);
+            map.set(key, value);
         }
-        return new ScaleMap<K, V>(data);
+        return map;
     }
 }
