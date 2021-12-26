@@ -703,12 +703,12 @@ describe("Hash", () => {
     it("should return hex representation of a hash", () => {
         let hash: Hash = new Hash([0xff]);
         expect<string>(hash.toString()).toStrictEqual(
-            "0x2550000000000000000000000000000000"
+            "0xff00000000000000000000000000000000000000000000000000000000000000"
         );
 
         hash = new Hash([0xff, 0x00, 0xff]);
         expect<string>(hash.toString()).toStrictEqual(
-            "0x255025500000000000000000000000000000"
+            "0xff00ff0000000000000000000000000000000000000000000000000000000000"
         );
 
         hash = new Hash([
@@ -746,7 +746,7 @@ describe("Hash", () => {
             0xff,
         ]);
         expect<string>(hash.toString()).toStrictEqual(
-            "0x255000000000000000000000000000000255"
+            "0xff000000000000000000000000000000000000000000000000000000000000ff"
         );
     });
 
