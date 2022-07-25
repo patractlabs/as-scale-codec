@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/patractlabs/as-scale-codec",
   "dependencies": {
-    "as-bignum": "0.2.18"
+    "as-bignum": "0.2.21"
   },
   "devDependencies": {
     "@as-pect/assembly": "6.2.0",
